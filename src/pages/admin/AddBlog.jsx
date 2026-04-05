@@ -167,7 +167,7 @@ const AddBlog = () => {
       const token = localStorage.getItem("adminToken")
       if (!token) {
         showToast("Please login as admin first", "error")
-        navigate("/grabiansadmin/login")
+        navigate("/seenalif-admin/login")
         return
       }
 

@@ -11,6 +11,7 @@ const RedirectHandler = () => {
     const checkRedirect = async () => {
       // Don't check admin or super admin routes
       if (location.pathname.startsWith('/admin') || 
+          location.pathname.startsWith('/seenalif-admin') ||
           location.pathname.startsWith('/grabiansadmin') ||
           location.pathname.startsWith('/superadmin') ||
           location.pathname.startsWith('/grabiansuperadmin')) {

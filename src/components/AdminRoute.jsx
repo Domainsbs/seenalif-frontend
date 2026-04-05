@@ -155,7 +155,7 @@ const AdminRoute = ({ children, requiredPermission }) => {
   const { hasPermission, isSuperAdmin } = useAuth()
   
   if (!adminToken) {
-    return <Navigate to="/grabiansadmin/login" />
+    return <Navigate to="/seenalif-admin/login" />
   }
   
   // Super admin has access to everything
@@ -171,7 +171,7 @@ const AdminRoute = ({ children, requiredPermission }) => {
     const firstPermittedRoute = getFirstPermittedRoute(hasPermission)
     // Prevent redirect loops (e.g. no permissions or same-route redirect)
     if (!firstPermittedRoute || firstPermittedRoute === location.pathname) {
-      return <Navigate to="/grabiansadmin/login" state={{ accessDenied: true, requiredPermission: permission }} replace />
+      return <Navigate to="/seenalif-admin/login" state={{ accessDenied: true, requiredPermission: permission }} replace />
     }
     return <Navigate to={firstPermittedRoute} state={{ accessDenied: true, requiredPermission: permission }} replace />
   }

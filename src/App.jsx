@@ -68,7 +68,7 @@ function DefaultCanonical() {
   return (
     <Helmet prioritizeSeoTags>
       {/* Default Site Title can be adjusted by SEO team */}
-      <title>Grabatoz</title>
+      <title>Seenalif</title>
       <link rel="canonical" href={href} />
     </Helmet>
   )
@@ -135,8 +135,9 @@ function App() {
                   />
 
                   {/* Admin Routes */}
+                  <Route path="/grabiansadmin/login" element={<Navigate to="/seenalif-admin/login" replace />} />
                   <Route
-                    path="/grabiansadmin/login"
+                    path="/seenalif-admin/login"
                     element={
                       <Suspense fallback={lazyFallback}>
                         <AdminLogin />

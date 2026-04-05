@@ -110,7 +110,7 @@ const PriceAdjustment = () => {
       console.error("Failed to load products:", error)
       if (error.response?.status === 401) {
         setError("Authentication failed. Please login again.")
-        window.location.href = "/grabiansadmin/login"
+        window.location.href = "/seenalif-admin/login"
       } else {
         setError("Failed to load products. Please try again later.")
       }
@@ -383,7 +383,7 @@ const PriceAdjustment = () => {
               {error}
               {error.includes("Authentication") && (
                 <button
-                  onClick={() => (window.location.href = "/grabiansadmin/login")}
+                  onClick={() => (window.location.href = "/seenalif-admin/login")}
                   className="ml-4 px-3 py-1 bg-red-600 text-white rounded text-sm"
                 >
                   Login Again

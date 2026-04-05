@@ -682,7 +682,7 @@ const Home = () => {
               <aside className="hidden sm:flex flex-col justify-between bg-[#505e4d] p-6 text-white">
                 <div>
                   <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/25 bg-white/10">
-                    <img src="/g.png" alt="Logo" className="h-10 w-10 object-contain" />
+                    <img src="/favicon.jpg?v=3" alt="Logo" className="h-10 w-10 object-contain" />
                   </div>
                   <h3 className="mt-4 text-xl font-bold leading-tight">Stay Updated</h3>
                   <p className="mt-2 text-xs text-slate-200">
@@ -710,7 +710,7 @@ const Home = () => {
                   <>
                     <div className="mb-4 flex items-start gap-3 sm:hidden">
                       <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-[#d7ddd4] bg-[#f3f6f2]">
-                        <img src="/g.png" alt="Logo" className="h-8 w-8 object-contain" />
+                        <img src="/favicon.jpg?v=3" alt="Logo" className="h-8 w-8 object-contain" />
                       </div>
                       <p className="text-xs text-[#505e4d]/80 mt-1">Manage notification preferences</p>
                     </div>
@@ -799,7 +799,7 @@ const Home = () => {
                 {notifSuccess && (
                   <div className="flex flex-col items-center justify-center py-8 text-center">
                     <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#d7ddd4] bg-[#f3f6f2]">
-                      <img src="/logo.png" alt="Logo" width="40" height="40" className="h-10 w-10 object-contain" />
+                      <img src="/favicon.jpg?v=3" alt="Logo" width="40" height="40" className="h-10 w-10 object-contain" />
                     </div>
                     <h2 className="mt-4 text-xl font-bold text-slate-900">Thank you for subscribing!</h2>
                     <p className="mt-1 text-sm text-slate-600">A confirmation email has been sent to {notifEmail}.</p>
