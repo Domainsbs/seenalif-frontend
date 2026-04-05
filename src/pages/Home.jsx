@@ -47,7 +47,6 @@ const FALLBACK_HERO_BANNER = {
   deviceType: "desktop",
 }
 const LIGHT_BANNER_FALLBACK = "lenovo-banner-768x290.jpg"
-const LIGHT_ACCESSORIES_DESKTOP_FALLBACK = "lenovo-banner-768x290.jpg"
 const LIGHT_NETWORKING_DESKTOP_FALLBACK =
   "https://res.cloudinary.com/dyfhsu5v6/image/upload/f_auto,q_68,w_1311,h_300,c_limit/v1753939592/networking_kr6uvk.png"
 
@@ -857,85 +856,51 @@ const Home = () => {
 
 
 
-      {/* Mobile Banner - HP Section (Dynamic) */}
-      <div className="md:hidden rounded-lg shadow-lg mx-5 md:mx-9 h-[160px]">
-        {getBannersForSection("hp-mobile", "home-brand-single").length > 0 ? (
-          <Link to={getBannerLink(getBannersForSection("hp-mobile", "home-brand-single")[0], brandUrls.HP)} aria-label="Browse HP products">
-            <img
-              src={getOptimizedImageUrl(getBannersForSection("hp-mobile", "home-brand-single")[0].image, { width: 768, height: 320, quality: 72 })}
-              alt={getBannersForSection("hp-mobile", "home-brand-single")[0].title || "HP Products Banner Mobile"}
-              className="w-full h-full bg-cover rounded-lg hover:opacity-95 transition-opacity cursor-pointer"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "11.png";
-              }}
-            />
-          </Link>
-        ) : (
-          <Link to={brandUrls.HP} aria-label="Browse HP products">
-            <img
-              src="11.png"
-              alt="HP Products Banner Mobile"
-              className="w-full h-full bg-cover rounded-lg hover:opacity-95 transition-opacity cursor-pointer"
-            />
-          </Link>
-        )}
-      </div>
+      {/* Mobile Banner - HP Section (Dynamic Only) */}
+      {(() => {
+        const hpMobileBanner = getBannersForSection("hp-mobile", "home-brand-single")[0]
+
+        return (
+          <div className="md:hidden rounded-lg shadow-lg mx-5 md:mx-9 h-[160px]">
+            {hpMobileBanner ? (
+              <Link to={getBannerLink(hpMobileBanner, brandUrls.HP)} aria-label="Browse HP products">
+                <img
+                  src={getOptimizedImageUrl(hpMobileBanner.image, { width: 768, height: 320, quality: 72 })}
+                  alt={hpMobileBanner.title || "HP Products Banner Mobile"}
+                  className="w-full h-full bg-cover rounded-lg hover:opacity-95 transition-opacity cursor-pointer"
+                />
+              </Link>
+            ) : null}
+          </div>
+        )
+      })()}
 
 
-      {/* Desktop Banner - HP and Dell (Dynamic) */}
-      <div className="hidden md:flex gap-2 mx-5 md:mx-9 h-[270px]">
-        {(() => {
-          const banners = getBannersForSection("hp-dell-desktop", "home-brand-dual")
-          const hpBanner = banners[0]
-          const dellBanner = banners[1]
+      {/* Desktop Banner - HP and Dell (Dynamic Only) */}
+      {(() => {
+        const dualBanners = getBannersForSection("hp-dell-desktop", "home-brand-dual").slice(0, 2)
 
-          return (
-            <>
-              <div className="w-1/2">
-                {hpBanner ? (
-                  <Link to={getBannerLink(hpBanner, brandUrls.HP)}>
-                    <img
-                      src={getOptimizedImageUrl(hpBanner.image, { width: 652, height: 270, quality: 70 })}
-                      alt={hpBanner.title || "HP Products Banner"}
-                      className="w-full h-full bg-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                      onError={(e) => handleBannerImageError(e, hpBanner.image)}
-                    />
-                  </Link>
-                ) : (
-                  <Link to={brandUrls.HP}>
-                    <img
-                      src={LIGHT_BANNER_FALLBACK}
-                      alt="HP Products Banner"
-                      className="w-full h-full bg-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                    />
-                  </Link>
-                )}
-              </div>
-              <div className="w-1/2">
-                {dellBanner ? (
-                  <Link to={getBannerLink(dellBanner, brandUrls.Dell)}>
-                    <img
-                      src={getOptimizedImageUrl(dellBanner.image, { width: 652, height: 270, quality: 70 })}
-                      alt={dellBanner.title || "Dell Products Banner"}
-                      className="w-full h-full bg-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                      onError={(e) => handleBannerImageError(e, dellBanner.image)}
-                    />
-                  </Link>
-                ) : (
-                  <Link to={brandUrls.Dell}>
-                    <img
-                      src={LIGHT_BANNER_FALLBACK}
-                      alt="Dell Products Banner"
-                      className="w-full h-full bg-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                    />
-                  </Link>
-                )}
-              </div>
-            </>
-          )
-        })()}
-      </div>
+        return (
+          <div className="hidden md:flex gap-2 mx-5 md:mx-9 h-[270px]">
+            {[0, 1].map((slot) => {
+              const banner = dualBanners[slot]
+              return (
+                <div key={`hp-dell-slot-${slot}`} className="w-1/2">
+                  {banner ? (
+                    <Link to={getBannerLink(banner, slot === 0 ? brandUrls.HP : brandUrls.Dell)}>
+                      <img
+                        src={getOptimizedImageUrl(banner.image, { width: 652, height: 270, quality: 70 })}
+                        alt={banner.title || (slot === 0 ? "HP Products Banner" : "Dell Products Banner")}
+                        className="w-full h-full bg-cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                      />
+                    </Link>
+                  ) : null}
+                </div>
+              )
+            })}
+          </div>
+        )
+      })()}
 
       {/* HP and Dell Section - Mobile shows only HP */}
       <section className="py-8 mx-5 md:mx-9">
@@ -1005,39 +970,24 @@ const Home = () => {
       {/* Dynamic Section Position 3 */}
       {renderDynamicSection(3)}
 
-      {/* Accessories Banner - Dynamic */}
-      <div className="mx-5 md:mx-9 my-4 h-[160px] lg:h-[300px]">
-        {getBannersForSection("accessories", "home-category-banner").length > 0 ? (
-          <Link to={getLocalizedPath(getBannersForSection("accessories", "home-category-banner")[0].link || "/product-category/accessories")}>
-            <img
-              src={getOptimizedImageUrl(getBannersForSection("accessories", "home-category-banner")[0].image, { width: 1311, height: 300, quality: 68 })}
-              alt={getBannersForSection("accessories", "home-category-banner")[0].title || "Accessories Promotion Banner"}
-              className="w-full h-full cover rounded-lg"
-              onError={(e) => {
-                e.target.onerror = null;
-                if (window.innerWidth < 1024) {
-                  e.target.src = "12.png";
-                } else {
-                  e.target.src = LIGHT_ACCESSORIES_DESKTOP_FALLBACK;
-                }
-              }}
-            />
-          </Link>
-        ) : (
-          <Link to={getLocalizedPath("/product-category/accessories")}>
-            <img
-              src="12.png"
-              alt="Accessories Promotion Banner Mobile"
-              className="w-full h-full cover rounded-lg lg:hidden"
-            />
-            <img
-              src={LIGHT_ACCESSORIES_DESKTOP_FALLBACK}
-              alt="Accessories Promotion Banner Desktop"
-              className="w-full h-full cover rounded-lg hidden lg:block"
-            />
-          </Link>
-        )}
-      </div>
+      {/* Accessories Banner - Dynamic Only */}
+      {(() => {
+        const accessoriesBanner = getBannersForSection("accessories", "home-category-banner")[0]
+
+        return (
+          <div className="mx-5 md:mx-9 my-4 h-[160px] lg:h-[300px]">
+            {accessoriesBanner ? (
+              <Link to={getLocalizedPath(accessoriesBanner.link || "/product-category/accessories")}>
+                <img
+                  src={getOptimizedImageUrl(accessoriesBanner.image, { width: 1311, height: 300, quality: 68 })}
+                  alt={accessoriesBanner.title || "Accessories Promotion Banner"}
+                  className="w-full h-full cover rounded-lg"
+                />
+              </Link>
+            ) : null}
+          </div>
+        )
+      })()}
 
       {/* Accessories Section - Mobile shows 2 products */}
       <section className="py-8 mx-5 md:mx-9">
