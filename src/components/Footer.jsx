@@ -76,8 +76,8 @@ const Footer = ({ className = "" }) => {
                 <img src="/seenalif.png" alt="Seen Alif" width="205" height="64" className="h-14 lg:h-16 w-auto object-contain" />
                 <div className="flex items-center flex-wrap gap-2 mt-5 text-white">
                   <span className="text-base font-semibold mr-1">Follow Us :</span>
-                  <a href="#" onClick={(e) => e.preventDefault()} aria-label="Facebook" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors"><Facebook size={16} /></a>
-                  <a href="#" onClick={(e) => e.preventDefault()} aria-label="Instagram" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors"><Instagram size={16} /></a>
+                  <a href="https://www.facebook.com/profile.php?id=61588606711840" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors"><Facebook size={16} /></a>
+                  <a href="https://www.instagram.com/seenalifcom/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors"><Instagram size={16} /></a>
                   <a href="#" onClick={(e) => e.preventDefault()} aria-label="Linkedin" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors"><Linkedin size={16} /></a>
                   <a href="#" onClick={(e) => e.preventDefault()} aria-label="Twitter" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors">
                     <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" role="img">
@@ -87,7 +87,7 @@ const Footer = ({ className = "" }) => {
                   <a href="#" onClick={(e) => e.preventDefault()} aria-label="TikTok" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors">
                     <FontAwesomeIcon icon={faTiktok} style={{ width: "14px", height: "14px" }} />
                   </a>
-                  <a href="#" onClick={(e) => e.preventDefault()} aria-label="YouTube" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors">
+                  <a href="https://www.youtube.com/@SeenAlif" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors">
                     <FontAwesomeIcon icon={faYoutube} style={{ width: "14px", height: "14px" }} />
                   </a>
                   <a href="#" onClick={(e) => e.preventDefault()} aria-label="Pinterest" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors">
@@ -333,8 +333,9 @@ const Footer = ({ className = "" }) => {
                 {/* <h4 className="text-sm font-semibold text-gray-900 mb-3">Connect With Us</h4> */}
                 <div className="flex space-x-4">
                   <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
+                    href="https://www.facebook.com/profile.php?id=61588606711840"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full flex items-center justify-center border border-white/25 bg-white/10 hover:bg-white/20"
                     aria-label="Facebook"
                   >
@@ -351,8 +352,9 @@ const Footer = ({ className = "" }) => {
                     </svg>
                   </a>
                   <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
+                    href="https://www.instagram.com/seenalifcom/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full flex items-center justify-center border border-white/25 bg-white/10 hover:bg-white/20"
                     aria-label="Instagram"
                   >
@@ -383,8 +385,9 @@ const Footer = ({ className = "" }) => {
                     <FontAwesomeIcon icon={faTiktok} style={{ width: '20px', height: '20px', color: '#000' }} />
                   </a>
                   <a
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
+                    href="https://www.youtube.com/@SeenAlif"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full flex items-center justify-center border border-white/25 bg-white/10 hover:bg-white/20"
                     aria-label="YouTube"
                   >
