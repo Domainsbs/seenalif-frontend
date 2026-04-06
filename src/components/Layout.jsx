@@ -7,7 +7,7 @@ import BlogNavbar from "./BlogNavbar"
 function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/971505033860"
+      href="https://wa.me/97143258808"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-24 md:bottom-20 right-4 z-50"

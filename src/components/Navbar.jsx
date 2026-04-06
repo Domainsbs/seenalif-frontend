@@ -238,6 +238,17 @@ const Navbar = () => {
   const CATEGORY_DROPDOWN_GAP = 6
   const MAX_CATEGORY_DROPDOWN_WIDTH = 1320
 
+  const normalizePath = (path) => String(path || "").replace(/\/+$/, "")
+  const isMobileNavActive = (targetPath) => {
+    const currentPath = normalizePath(location.pathname)
+    const localizedTarget = normalizePath(getLocalizedPath(targetPath))
+    if (!localizedTarget) return false
+    if (localizedTarget === normalizePath(getLocalizedPath("/"))) {
+      return currentPath === localizedTarget
+    }
+    return currentPath === localizedTarget || currentPath.startsWith(`${localizedTarget}/`)
+  }
+
   useEffect(() => {
     const timer = setInterval(() => {
       setTopBarMessageIndex((prev) => (prev + 1) % TOP_BAR_MESSAGES.length)
@@ -1084,23 +1095,31 @@ const Navbar = () => {
               </Link>
 
               <div className="relative px-4 border-l border-gray-200">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (isAuthenticated) {
-                      setIsProfileOpen(!isProfileOpen)
-                    } else {
-                      setIsProfileOpen(false)
-                      navigate(getLocalizedPath("/login"))
-                    }
-                  }}
-                  className="flex flex-col items-center text-xs text-gray-600 hover:text-[#505e4d]"
-                  ref={profileButtonRef}
-                  aria-label="Register or login"
-                >
-                  <User className="h-4 w-4 text-gray-700" />
-                  <span className="mt-1 whitespace-nowrap">{isAuthenticated ? "My Account" : "Register / Login"}</span>
-                </button>
+                {isAuthenticated ? (
+                  <button
+                    type="button"
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    className="flex flex-col items-center text-xs text-gray-600 hover:text-[#505e4d]"
+                    ref={profileButtonRef}
+                    aria-label="My account"
+                  >
+                    <User className="h-4 w-4 text-gray-700" />
+                    <span className="mt-1 whitespace-nowrap">My Account</span>
+                  </button>
+                ) : (
+                  <div className="flex flex-col items-center text-xs text-gray-600" aria-label="Register or login">
+                    <User className="h-4 w-4 text-gray-700" />
+                    <div className="mt-1 whitespace-nowrap">
+                      <Link to={getLocalizedPath("/register")} className="hover:text-[#505e4d]">
+                        Register
+                      </Link>
+                      <span className="px-1 text-gray-400">/</span>
+                      <Link to={getLocalizedPath("/login")} className="hover:text-[#505e4d]">
+                        Login
+                      </Link>
+                    </div>
+                  </div>
+                )}
 
                 {isAuthenticated && isProfileOpen && (
                   <div
@@ -1453,16 +1472,22 @@ const Navbar = () => {
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
         <div className="flex items-center justify-around py-2">
           {/* Home */}
-          <Link to={getLocalizedPath("/")} className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-lime-500">
+          <Link
+            to={getLocalizedPath("/")}
+            className={`flex flex-col items-center py-2 px-4 ${isMobileNavActive("/") ? "text-[#505e4d]" : "text-gray-600"} hover:text-[#505e4d]`}
+          >
             <Home size={20} />
             <span className="text-xs mt-1"><TranslatedText>Home</TranslatedText></span>
           </Link>
 
           {/* Cart */}
-          <Link to={getLocalizedPath("/cart")} className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-lime-500 relative">
+          <Link
+            to={getLocalizedPath("/cart")}
+            className={`flex flex-col items-center py-2 px-4 relative ${isMobileNavActive("/cart") ? "text-[#505e4d]" : "text-gray-600"} hover:text-[#505e4d]`}
+          >
             <ShoppingCart size={20} />
             {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold hover:text-lime-500">
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
                 {cartCount}
               </span>
             )}
@@ -1472,7 +1497,7 @@ const Navbar = () => {
           {/* Wishlist */}
           <Link
             to={getLocalizedPath("/wishlist")}
-            className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-lime-500 relative"
+            className={`flex flex-col items-center py-2 px-4 relative ${isMobileNavActive("/wishlist") ? "text-[#505e4d]" : "text-gray-600"} hover:text-[#505e4d]`}
             aria-label="Wishlist"
           >
             <Heart size={20} className="" />
@@ -1485,13 +1510,28 @@ const Navbar = () => {
           </Link>
 
           {/* Account */}
-          <Link
-            to={getLocalizedPath(isAuthenticated ? "/profile" : "/login")}
-            className="flex flex-col items-center py-2 px-4 text-gray-600 hover:text-lime-500"
-          >
-            <UserCircle size={20} />
-            <span className="text-xs mt-1"><TranslatedText>Account</TranslatedText></span>
-          </Link>
+          {isAuthenticated ? (
+            <Link
+              to={getLocalizedPath("/profile")}
+              className={`flex flex-col items-center py-2 px-4 ${isMobileNavActive("/profile") ? "text-[#505e4d]" : "text-gray-600"} hover:text-[#505e4d]`}
+            >
+              <UserCircle size={20} />
+              <span className="text-xs mt-1"><TranslatedText>Account</TranslatedText></span>
+            </Link>
+          ) : (
+            <div className="flex flex-col items-center py-2 px-2 text-gray-600">
+              <UserCircle size={20} />
+              <div className="mt-1 flex items-center text-[11px] leading-none">
+                <Link to={getLocalizedPath("/register")} className="hover:text-[#505e4d]">
+                  Register
+                </Link>
+                <span className="mx-1 text-gray-400">/</span>
+                <Link to={getLocalizedPath("/login")} className="hover:text-[#505e4d]">
+                  Login
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
     </>
