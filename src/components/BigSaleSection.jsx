@@ -53,9 +53,9 @@ const ProductCard = ({ product }) => {
   const categorySourceDoc = typeof product.category === "object" ? product.category : product
 
   return (
-    <article className="group flex h-[360px] flex-col overflow-hidden rounded-xl border border-[#d7ddd4] bg-white p-3 transition-colors duration-200 hover:border-[#b8c2b3]">
+    <article className="group flex h-[370px] flex-col overflow-hidden rounded-xl border border-[#d7ddd4] bg-white p-3 transition-colors duration-200 hover:border-[#b8c2b3]">
       <div className="flex-1 min-h-0">
-        <div className="relative mb-2">
+        <div className="mb-2">
           <Link to={getLocalizedPath(`/product/${encodeURIComponent(product.slug || product._id)}`)} className="block">
             <div className="flex h-[138px] items-center justify-center rounded-lg bg-[#f4f6f3] p-2">
               <img
@@ -69,9 +69,22 @@ const ProductCard = ({ product }) => {
               />
             </div>
           </Link>
+        </div>
+
+        <div className="mb-2 flex items-center justify-between gap-2">
+          <div className="flex min-w-0 items-center gap-2">
+            <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${getStockPillClass(stockStatus)}`}>
+              <TranslatedText text={stockStatus} sourceDoc={product} fieldName="stockStatus" />
+            </span>
+            {discountValue > 0 && (
+              <div className="rounded-full bg-[#505e4d] px-2.5 py-1 text-[10px] font-semibold text-white">
+                {discountValue}% Off
+              </div>
+            )}
+          </div>
 
           <button
-            className="absolute right-2 top-2 inline-flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 transition-colors hover:border-[#505e4d] hover:text-[#505e4d]"
+            className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#d3d8d0] bg-white text-[#e35f75] transition-colors hover:bg-rose-50"
             onClick={(e) => {
               e.preventDefault()
               e.stopPropagation()
@@ -79,19 +92,8 @@ const ProductCard = ({ product }) => {
             }}
             aria-label={isInWishlist(product._id) ? "Remove from wishlist" : "Add to wishlist"}
           >
-            <Heart size={13} className={isInWishlist(product._id) ? "fill-[#505e4d] text-[#505e4d]" : ""} />
+            <Heart size={13} className={isInWishlist(product._id) ? "fill-[#e35f75] text-[#e35f75]" : "text-[#e35f75]"} />
           </button>
-        </div>
-
-        <div className="mb-2 flex flex-wrap items-center gap-2">
-          <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${getStockPillClass(stockStatus)}`}>
-            <TranslatedText text={stockStatus} sourceDoc={product} fieldName="stockStatus" />
-          </span>
-          {discountValue > 0 && (
-            <div className="rounded-full bg-[#505e4d] px-2.5 py-1 text-[10px] font-semibold text-white">
-              {discountValue}% Off
-            </div>
-          )}
         </div>
 
         <Link to={getLocalizedPath(`/product/${encodeURIComponent(product.slug || product._id)}`)} className="mb-0.5 block">
@@ -119,7 +121,7 @@ const ProductCard = ({ product }) => {
 
         <div className="mb-0 text-[11px] text-[#505e4d]"><TranslatedText>Inclusive VAT</TranslatedText></div>
 
-        <div className="-mt-0.5 mb-0.5 flex items-end gap-2">
+        <div className="mt-0.5 mb-2 flex items-end gap-2">
           <div className="text-base font-bold text-[#1f2a1d]">
             {Number(priceToShow).toLocaleString(undefined, { minimumFractionDigits: 2 })} <TranslatedText>AED</TranslatedText>
           </div>

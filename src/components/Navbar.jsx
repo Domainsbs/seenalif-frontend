@@ -11,7 +11,6 @@ import { useAuth } from "../context/AuthContext"
 import { useCart } from "../context/CartContext"
 import { useWishlist } from "../context/WishlistContext"
 import { useLanguage } from "../context/LanguageContext"
-import LanguageSelector from "./LanguageSelector"
 import TranslatedText from "./TranslatedText"
 import { preloadTranslations } from "../LanguageModel/translationService"
 import {
@@ -107,13 +106,13 @@ const MobileSubCategoryItem = ({
   const getArrowButtonStyles = () => {
     switch(level) {
       case 1:
-        return 'w-7 h-7 bg-[#feee00] hover:bg-lime-600 shadow-sm'
+        return 'w-7 h-7 bg-[#505e4d] hover:bg-[#445241] shadow-sm text-white'
       case 2:
-        return 'w-6 h-6 bg-lime-400 hover:bg-[#feee00] shadow-sm'
+        return 'w-6 h-6 bg-[#505e4d] hover:bg-[#445241] shadow-sm text-white'
       case 3:
-        return 'w-5 h-5 bg-lime-300 hover:bg-lime-400'
+        return 'w-5 h-5 bg-[#505e4d] hover:bg-[#445241] text-white'
       default:
-        return 'w-5 h-5 bg-lime-200 hover:bg-lime-300'
+        return 'w-5 h-5 bg-[#505e4d] hover:bg-[#445241] text-white'
     }
   }
   
@@ -146,7 +145,7 @@ const MobileSubCategoryItem = ({
               e.stopPropagation()
               onToggle(subCategory._id)
             }}
-            className={`ml-2 inline-flex items-center justify-center rounded-full text-black focus:outline-none focus:ring-2 focus:ring-lime-500 active:scale-95 transition ${getArrowButtonStyles()}`}
+            className={`ml-2 inline-flex items-center justify-center rounded-full text-white focus:outline-none focus:ring-2 focus:ring-[#505e4d] active:scale-95 transition ${getArrowButtonStyles()}`}
             aria-expanded={isExpanded}
             aria-controls={`mobile-subcat-${subCategory._id}`}
           >
@@ -1310,38 +1309,30 @@ const Navbar = () => {
           {/* Drawer */}
           <div className="fixed left-0 top-0 h-full w-80 bg-white shadow-xl overflow-y-auto">
             {/* Drawer Header */}
-            <div className="flex items-center justify-between p-4 bg-[#feee00] text-black">
+            <div className="flex items-center justify-between p-4 bg-[#505e4d] text-white">
               <div className="flex items-center">
-                <UserCircle size={24} className="text-black mr-2" />
+                <UserCircle size={24} className="text-white mr-2" />
                 {isAuthenticated ? (
-                  <span className="text-black">{`Hello, ${user?.name || "User"}`}</span>
+                  <span className="text-white">{`Hello, ${user?.name || "User"}`}</span>
                 ) : (
                   <button
                     onClick={() => {
                       closeMobileMenu()
                       navigate(getLocalizedPath('/login'))
                     }}
-                    className="text-black font-medium hover:text-black/80 transition-colors"
+                    className="text-white font-medium hover:text-white/80 transition-colors"
                   >
                     Hello, <span className="underline"><TranslatedText>Sign in</TranslatedText></span>
                   </button>
                 )}
               </div>
               <button onClick={closeMobileMenu} className="p-1">
-                <X size={24} className="text-black" />
+                <X size={24} className="text-white" />
               </button>
             </div>
 
             {/* Drawer Content */}
             <div className="p-4">
-              {/* Language Selector for Mobile */}
-              <div className="mb-4 pb-4 border-b border-gray-200">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-gray-600"><TranslatedText>Language</TranslatedText></span>
-                  <LanguageSelector variant="compact" />
-                </div>
-              </div>
-
               {/* Quick Actions */}
               <div className="mb-6">
                 <Link
@@ -1430,12 +1421,12 @@ const Navbar = () => {
                               onClick={() => toggleMobileCategory(parentCategory._id)}
                               aria-label={isExpanded ? "Collapse subcategories" : "Expand subcategories"}
                               aria-expanded={isExpanded}
-                              className="ml-2 inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#feee00] text-black shadow-sm hover:bg-lime-600 active:scale-95 transition"
+                              className="ml-2 inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#505e4d] text-white shadow-sm hover:bg-[#445241] active:scale-95 transition"
                             >
                               {isExpanded ? (
-                                <ChevronDown size={20} className="text-black" />
+                                <ChevronDown size={20} className="text-white" />
                               ) : (
-                                <ChevronRight size={20} className="text-black" />
+                                <ChevronRight size={20} className="text-white" />
                               )}
                             </button>
                           ) : (
