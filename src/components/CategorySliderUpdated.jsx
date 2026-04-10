@@ -307,6 +307,7 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
   const visibleCategories = getVisibleCategories();
   const shouldShowArrows = allSliderItems.length > visibleCount;
   const isStaticLayout = allSliderItems.length <= visibleCount;
+  const staticItemWidth = "clamp(96px, 11vw, 144px)";
 
   const sliderStyle = {
     transform: `translateX(${dragOffset}px)`,
@@ -341,8 +342,8 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
             <div
               className={`flex items-center transition-transform duration-300 ease-in-out ${
                 isStaticLayout
-                  ? 'justify-center gap-x-2 sm:gap-x-3 lg:gap-x-3 xl:gap-x-4'
-                  : 'justify-evenly'
+                  ? 'justify-center gap-x-2 sm:gap-x-3 lg:gap-x-4'
+                  : 'justify-center'
               }`}
               style={shouldShowArrows ? sliderStyle : {}}
             >
@@ -475,9 +476,11 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
                     onClick={handleItemClick}
                     className={layoutClasses.container}
                     style={{
-                      width: isStaticLayout ? 'auto' : `${100 / visibleCount}%`,
-                      maxWidth: "160px",
-                      minWidth: "80px",
+                      width: isStaticLayout ? staticItemWidth : `${100 / visibleCount}%`,
+                      maxWidth: isStaticLayout ? "144px" : "none",
+                      minWidth: isStaticLayout ? "96px" : "0",
+                      paddingLeft: isStaticLayout ? "0" : "0.25rem",
+                      paddingRight: isStaticLayout ? "0" : "0.25rem",
                     }}
                   >
                     {layoutClasses.isCircularCard ? (
