@@ -9,12 +9,12 @@ export const generateProductSchema = (product) => {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name || product.title || "Product",
-    "description": product.description || product.shortDescription || `${product.name || 'Product'} available at GrabAtoZ`,
+    "description": product.description || product.shortDescription || `${product.name || 'Product'} available at Seen Alif`,
     "sku": product.sku || product._id,
     "mpn": product.mpn || product.model || product.sku || product._id,
     "brand": {
       "@type": "Brand",
-      "name": product.brand || "GrabAtoZ"
+      "name": product.brand || "Seen Alif"
     },
     "offers": {
       "@type": "Offer",
@@ -26,7 +26,7 @@ export const generateProductSchema = (product) => {
       "availability": cleanStock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       "seller": {
         "@type": "Organization",
-        "name": "Grabatoz powered by Crown Excel General Trading LLC",
+        "name": "Seen Alif",
         "url": baseUrl
       },
       "hasMerchantReturnPolicy": {

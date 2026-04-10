@@ -16,10 +16,30 @@ const getStockPillClass = (status) => {
   return "border border-slate-200 bg-slate-100 text-slate-600"
 }
 
+const FALLBACK_IMAGE_SRC = "/placeholder.svg"
+
+const getPrimaryImagePath = (product) =>
+  (typeof product?.image === "string" && product.image.trim()) ||
+  (Array.isArray(product?.galleryImages) && product.galleryImages.find((img) => typeof img === "string" && img.trim())) ||
+  (Array.isArray(product?.images) && product.images.find((img) => typeof img === "string" && img.trim())) ||
+  ""
+
 const ProductCard = ({ product }) => {
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist()
   const { addToCart } = useCart()
   const { getLocalizedPath } = useLanguage()
+  const [imageFailed, setImageFailed] = useState(false)
+
+  const primaryImagePath = getPrimaryImagePath(product)
+  const optimizedImageSrc = primaryImagePath
+    ? getOptimizedImageUrl(primaryImagePath, { width: 220, height: 220, quality: 68 })
+    : ""
+  const isUsingFallbackImage = imageFailed || !optimizedImageSrc
+  const displayImageSrc = isUsingFallbackImage ? FALLBACK_IMAGE_SRC : optimizedImageSrc
+
+  useEffect(() => {
+    setImageFailed(false)
+  }, [product?._id, product?.image, product?.galleryImages, product?.images])
 
   const stockStatus = product.stockStatus || (product.countInStock > 0 ? "In Stock" : "Out of Stock")
   const normalizedStock = String(stockStatus || "").trim().toLowerCase()
@@ -57,15 +77,24 @@ const ProductCard = ({ product }) => {
       <div className="flex-1 min-h-0">
         <div className="mb-2">
           <Link to={getLocalizedPath(`/product/${encodeURIComponent(product.slug || product._id)}`)} className="block">
-            <div className="flex h-[138px] items-center justify-center rounded-lg bg-[#f4f6f3] p-2">
+            <div
+              className={`flex h-[138px] items-center justify-center rounded-lg p-2 ${
+                isUsingFallbackImage ? "bg-[#f4f6f3]" : "bg-white"
+              }`}
+            >
               <img
-                src={getOptimizedImageUrl(product.image, { width: 220, height: 220, quality: 68 }) || "/placeholder.svg?height=120&width=120"}
-                alt={product.name}
+                src={displayImageSrc}
+                alt="Product image"
                 loading="lazy"
                 decoding="async"
                 width="165"
                 height="165"
                 className="h-full w-full object-contain"
+                onError={(e) => {
+                  e.currentTarget.onerror = null
+                  setImageFailed(true)
+                  e.currentTarget.src = FALLBACK_IMAGE_SRC
+                }}
               />
             </div>
           </Link>

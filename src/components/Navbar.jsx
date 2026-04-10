@@ -1359,7 +1359,7 @@ const Navbar = () => {
                   <Search size={20} className="mr-3" />
                   <strong><TranslatedText>Track Order</TranslatedText></strong>
                 </Link>
-                <a
+                {/* <a
                   href="https://crownexcel.ae"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -1368,7 +1368,7 @@ const Navbar = () => {
                 >
                   <Grid3X3 size={20} className="mr-3" />
                   <strong>CROWNYX</strong>
-                </a>
+                </a> */}
               </div>
 
               {/* Shop by Category */}

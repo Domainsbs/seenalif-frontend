@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Heart, Star, ShoppingBag } from "lucide-react"
 import { useWishlist } from "../context/WishlistContext"
@@ -15,10 +16,29 @@ const getStockPillClass = (status) => {
   return "border border-slate-200 bg-slate-100 text-slate-600"
 }
 
+const FALLBACK_IMAGE_SRC = "/placeholder.svg"
+
+const hasProductImage = (product) =>
+  Boolean(
+    (typeof product?.image === "string" && product.image.trim()) ||
+      (Array.isArray(product?.galleryImages) && product.galleryImages.find((img) => typeof img === "string" && img.trim())) ||
+      (Array.isArray(product?.images) && product.images.find((img) => typeof img === "string" && img.trim())),
+  )
+
 const HomeStyleProductCard = ({ product }) => {
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist()
   const { addToCart } = useCart()
   const { getLocalizedPath } = useLanguage()
+  const [imageFailed, setImageFailed] = useState(false)
+
+  const imageExists = hasProductImage(product)
+  const resolvedImageSrc = imageExists ? getImageUrl(product) : FALLBACK_IMAGE_SRC
+  const shouldUseFallback = !imageExists || imageFailed
+  const displayImageSrc = shouldUseFallback ? FALLBACK_IMAGE_SRC : resolvedImageSrc
+
+  useEffect(() => {
+    setImageFailed(false)
+  }, [product?._id, product?.image])
 
   const stockStatus = product.stockStatus || (product.countInStock > 0 ? "In Stock" : "Out of Stock")
   const normalizedStock = String(stockStatus || "").trim().toLowerCase()
@@ -62,40 +82,39 @@ const HomeStyleProductCard = ({ product }) => {
     null
 
   return (
-    <article className="group flex h-[370px] flex-col overflow-hidden rounded-xl border border-[#d7ddd4] bg-white p-3 transition-colors duration-200 hover:border-[#b8c2b3]">
-      <div className="mb-2">
+    <article className="group flex h-[302px] sm:h-[370px] flex-col overflow-hidden rounded-xl border border-[#d7ddd4] bg-white p-2.5 sm:p-3 transition-colors duration-200 hover:border-[#b8c2b3]">
+      <div className="mb-1.5 sm:mb-2">
         <Link to={getLocalizedPath(`/product/${encodeURIComponent(product.slug || product._id)}`)} className="block">
-          <div className="flex h-[138px] items-center justify-center rounded-lg bg-[#f4f6f3] p-2">
+          <div className={`flex h-[100px] sm:h-[138px] items-center justify-center rounded-lg p-1.5 sm:p-2 ${shouldUseFallback ? "bg-[#f4f6f3]" : "bg-white"}`}>
             <img
-              src={
-                getImageUrl(product) ||
-                "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%239ca3af'%3ENo Image%3C/text%3E%3C/svg%3E"
-              }
-              alt={product.name}
+              src={displayImageSrc}
+              alt="Product image"
               className="h-full w-full object-contain"
               onError={(e) => {
-                e.currentTarget.src =
-                  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Crect width='120' height='120' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%239ca3af'%3ENo Image%3C/text%3E%3C/svg%3E"
+                if (!shouldUseFallback) {
+                  setImageFailed(true)
+                  e.currentTarget.src = FALLBACK_IMAGE_SRC
+                }
               }}
             />
           </div>
         </Link>
       </div>
 
-      <div className="mb-2 flex items-center justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-2">
-          <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${getStockPillClass(stockStatus)}`}>
+      <div className="mb-1.5 sm:mb-2 flex items-center justify-between gap-1.5 sm:gap-2">
+        <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
+          <span className={`whitespace-nowrap rounded-full px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold ${getStockPillClass(stockStatus)}`}>
             <TranslatedText text={stockStatus} sourceDoc={product} fieldName="stockStatus" />
           </span>
           {discountValue > 0 && (
-            <span className="rounded-full bg-[#505e4d] px-2.5 py-1 text-[10px] font-semibold text-white">
+            <span className="whitespace-nowrap rounded-full bg-[#505e4d] px-2 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-[10px] font-semibold text-white">
               {discountValue}% Off
             </span>
           )}
         </div>
 
         <button
-          className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#d3d8d0] bg-white text-[#e35f75] transition-colors hover:bg-rose-50"
+          className="inline-flex h-6 w-6 sm:h-7 sm:w-7 shrink-0 items-center justify-center rounded-full border border-[#d3d8d0] bg-white text-[#e35f75] transition-colors hover:bg-rose-50"
           onClick={(e) => {
             e.preventDefault()
             e.stopPropagation()
@@ -107,9 +126,9 @@ const HomeStyleProductCard = ({ product }) => {
         </button>
       </div>
 
-      <Link to={getLocalizedPath(`/product/${encodeURIComponent(product.slug || product._id)}`)} className="mb-0.5">
+      <Link to={getLocalizedPath(`/product/${encodeURIComponent(product.slug || product._id)}`)} className="mb-0.5 block">
         <h3
-          className="min-h-[40px] text-sm font-semibold leading-5 text-slate-900 transition-colors group-hover:text-[#505e4d]"
+          className="min-h-[36px] sm:min-h-[40px] text-[13px] sm:text-sm font-semibold leading-[1.15rem] sm:leading-5 tracking-tight text-slate-900 transition-colors group-hover:text-[#505e4d]"
           style={{
             display: "-webkit-box",
             WebkitLineClamp: 2,
@@ -121,7 +140,7 @@ const HomeStyleProductCard = ({ product }) => {
         </h3>
       </Link>
 
-      <div className="mb-0.5 min-h-[16px] text-[11px] text-slate-500">
+      <div className="mb-0.5 min-h-[14px] sm:min-h-[16px] truncate text-[10px] sm:text-[11px] text-slate-500">
         <TranslatedText>Category</TranslatedText>:{" "}
         <span className="font-medium text-slate-700">
           {categorySourceDoc ? (
@@ -132,22 +151,22 @@ const HomeStyleProductCard = ({ product }) => {
         </span>
       </div>
 
-      <div className="mb-0 text-[11px] text-[#505e4d]">
+      <div className="mb-0 text-[10px] sm:text-[11px] text-[#505e4d]">
         <TranslatedText>Inclusive VAT</TranslatedText>
       </div>
 
-      <div className="mt-0.5 mb-0 flex items-end gap-2">
-        <div className="text-base font-bold text-[#1f2a1d]">
+      <div className="mt-0.5 mb-0 flex items-end gap-1.5 sm:gap-2">
+        <div className="text-[15px] sm:text-base font-bold leading-none text-[#1f2a1d] whitespace-nowrap">
           {Number(priceToShow).toLocaleString(undefined, { minimumFractionDigits: 2 })} <TranslatedText>AED</TranslatedText>
         </div>
         {hasValidOffer && (
-          <div className="pb-0.5 text-xs font-medium text-slate-400 line-through">
+          <div className="pb-0.5 text-[11px] sm:text-xs font-medium text-slate-400 line-through whitespace-nowrap">
             {Number(basePrice).toLocaleString(undefined, { minimumFractionDigits: 2 })} <TranslatedText>AED</TranslatedText>
           </div>
         )}
       </div>
 
-      <div className="mb-2 flex min-h-[18px] items-center">
+      <div className="mb-1.5 sm:mb-2 flex min-h-[16px] sm:min-h-[18px] items-center">
         <div className="flex items-center gap-0.5 leading-none">
           {[...Array(5)].map((_, i) => (
             <Star
@@ -158,7 +177,7 @@ const HomeStyleProductCard = ({ product }) => {
             />
           ))}
         </div>
-        <span className="ml-1 text-xs text-slate-500">({numReviews})</span>
+        <span className="ml-1 text-[10px] sm:text-xs text-slate-500">({numReviews})</span>
       </div>
 
       <button
@@ -171,11 +190,11 @@ const HomeStyleProductCard = ({ product }) => {
           }, 100)
           addToCart(product)
         }}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#505e4d] bg-[#505e4d] px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#465342] disabled:cursor-not-allowed disabled:bg-slate-400"
+        className="inline-flex w-full items-center justify-center gap-1.5 sm:gap-2 rounded-lg border border-[#505e4d] bg-[#505e4d] px-2.5 sm:px-3 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold tracking-tight text-white transition-colors hover:bg-[#465342] disabled:cursor-not-allowed disabled:bg-slate-400"
         style={{ backgroundColor: "#505e4d", borderColor: "#505e4d" }}
         disabled={!isAvailable}
       >
-        <ShoppingBag size={13} />
+        <ShoppingBag size={12} />
         <TranslatedText>Add to Cart</TranslatedText>
       </button>
     </article>

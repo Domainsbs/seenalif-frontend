@@ -406,6 +406,7 @@ import {
 } from "lucide-react"
 import axios from "axios"
 import { getFullImageUrl } from "../utils/imageUtils"
+import SEO from "../components/SEO"
 
 import config from "../config/config"
 
@@ -535,7 +536,13 @@ const TrackOrder = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-[#f3f5f2]">
+    <>
+      <SEO
+        title="Track Your Order - Seen Alif"
+        description="Track your Seen Alif order in real time using your email and order ID. Get shipping updates, delivery status, and secure support for all categories."
+        canonicalPath="/track-order"
+      />
+      <div className="min-h-screen bg-[#f3f5f2] overflow-x-hidden">
       {/* Hero Section */}
       <div className="bg-[#505e4d]">
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
@@ -589,7 +596,7 @@ const TrackOrder = () => {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-16 overflow-x-hidden">
         {/* Track Order Form */}
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-6 sm:p-10 mb-10">
           <div className="text-center mb-8">
@@ -694,13 +701,13 @@ const TrackOrder = () => {
                   <h2 className="text-2xl sm:text-3xl font-bold">{orderData.status}</h2>
                   <p className="mt-2 opacity-80">
                     {orderData.status.toLowerCase().includes("delivered")
-                      ? "ðŸŽ‰ Your order has been delivered successfully!"
+                      ? "Your order has been delivered successfully."
                       : orderData.status.toLowerCase().includes("shipped") ||
                           orderData.status.toLowerCase().includes("way")
-                        ? "ðŸ“¦ Your order is on the way to your address."
+                        ? "Your order is on the way to your address."
                         : orderData.status.toLowerCase().includes("processing")
-                          ? "âš™ï¸ Your order is being processed and will be shipped soon."
-                          : "âœ… Your order has been received and is being prepared."}
+                          ? "Your order is being processed and will be shipped soon."
+                          : "Your order has been received and is being prepared."}
                   </p>
                 </div>
               </div>
@@ -1001,7 +1008,8 @@ const TrackOrder = () => {
           </div>
         )}
       </div>
-    </div>
+      </div>
+    </>
   )
 }
 

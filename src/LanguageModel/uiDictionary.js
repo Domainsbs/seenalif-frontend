@@ -399,6 +399,7 @@ export const uiDictionary = {
   "Core Service Aspects": "جوانب الخدمة الأساسية",
   "Secure Payment Method": "طريقة دفع آمنة",
   "Available Different secure Payment Methods": "طرق دفع آمنة ومتنوعة متاحة",
+  "Free shipping when you spend AED500 & above. Unlimited destinations in Abu Dhabi": "شحن مجاني عند إنفاق 500 درهم وأكثر. وجهات غير محدودة في أبوظبي",
   "Extreme Fast Delivery": "توصيل سريع للغاية",
   "Fast and convenient From door to door delivery": "توصيل سريع ومريح من الباب إلى الباب",
   "Quality & Savings": "الجودة والتوفير",

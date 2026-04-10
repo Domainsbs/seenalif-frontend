@@ -71,12 +71,13 @@ export const extractFirstHeading = (htmlContent) => {
  * @param {string} brandName - Site/brand name
  * @returns {string} - Optimized SEO title
  */
-export const generateSEOTitle = (categoryName, htmlContent, brandName = 'Grabatoz') => {
+export const generateSEOTitle = (categoryName, htmlContent, brandName = 'Seen Alif') => {
   const heading = extractFirstHeading(htmlContent);
   
   if (heading) {
     return `${heading} | ${brandName}`;
   }
   
-  return `${categoryName} — Shop | ${brandName}`;
+  return `${categoryName} - Shop | ${brandName}`;
 };
+

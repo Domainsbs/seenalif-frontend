@@ -245,6 +245,46 @@ const Checkout = () => {
     return `AED ${price.toLocaleString(undefined, { minimumFractionDigits: 2 })}`
   }
 
+  const getPaymentMethodMeta = (methodId) => {
+    switch (methodId) {
+      case "card":
+        return {
+          title: "Pay by Card",
+          description: "Visa, Mastercard and secure online payments",
+          badge: "Recommended",
+          badgeClass: "bg-emerald-50 text-emerald-700 border border-emerald-200",
+        }
+      case "cod":
+        return {
+          title: "Cash on Delivery",
+          description: "Pay in cash when your order reaches your location",
+          badge: "Cash",
+          badgeClass: "bg-amber-50 text-amber-700 border border-amber-200",
+        }
+      case "tamara":
+        return {
+          title: "Tamara",
+          description: "Split your purchase into 3 interest-free installments",
+          badge: "Installments",
+          badgeClass: "bg-sky-50 text-sky-700 border border-sky-200",
+        }
+      case "tabby":
+        return {
+          title: "Tabby",
+          description: "Split your purchase into 4 interest-free installments",
+          badge: "Installments",
+          badgeClass: "bg-violet-50 text-violet-700 border border-violet-200",
+        }
+      default:
+        return {
+          title: "Payment Method",
+          description: "Choose your preferred method",
+          badge: "Option",
+          badgeClass: "bg-gray-50 text-gray-700 border border-gray-200",
+        }
+    }
+  }
+
   // Respect bundlePrice, bundleDiscount (25%), then offerPrice, then base price
   const getItemPrice = (item) => {
     const original = Number(item.originalPrice)
@@ -1243,8 +1283,8 @@ const Checkout = () => {
   const remainingItemsCount = regularCartItems.length - 2
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8 px-6">
+    <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8">
+      <div className="mb-8 px-1 sm:px-6">
         <nav className="text-sm text-gray-500 mb-4">
           <TranslatedText>Home</TranslatedText> <span className="mx-2">›</span> <span className="font-semibold text-[#505e4d]"><TranslatedText>Checkout</TranslatedText></span>
         </nav>
@@ -1580,42 +1620,70 @@ const Checkout = () => {
                 <div>
                   <h3 className="font-bold text-lg mb-6"><TranslatedText>Payment Method</TranslatedText></h3>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
-                    {PAYMENT_METHODS.map((method) => (
-                      <div
+                  <div className="grid grid-cols-1 gap-3 mb-4">
+                    {PAYMENT_METHODS.map((method) => {
+                      const meta = getPaymentMethodMeta(method.id)
+                      return (
+                      <label
                         key={method.id}
-                        className={` rounded-lg p-4 cursor-pointer transition-all relative ${selectedPaymentMethod === method.id
-                            ? "border-[#505e4d] bg-[#f1f4f0]"
-                            : "border-gray-200 hover:border-gray-300 bg-white"
-                          }`}
+                        className={`group relative flex cursor-pointer items-center gap-2.5 overflow-hidden rounded-2xl border-2 p-2.5 sm:p-3 transition-all ${
+                          selectedPaymentMethod === method.id
+                            ? "border-[#505e4d] bg-[#f5f8f4]"
+                            : "border-gray-200 bg-white hover:border-[#b6c1b2]"
+                        }`}
                         onClick={() => handlePaymentMethodSelect(method.id)}
                       >
-                        {/* Radio button positioned at top-left corner */}
+                        {selectedPaymentMethod === method.id && (
+                          <div className="absolute inset-x-0 top-0 h-1 bg-[#505e4d]" />
+                        )}
+
                         <input
                           type="radio"
                           name="paymentMethod"
                           value={method.id}
                           checked={selectedPaymentMethod === method.id}
                           onChange={() => setSelectedPaymentMethod(method.id)}
-                          className="absolute top-20 left-16 accent-[#505e4d] w-4 h-4"
+                          className="mt-1.5 h-4 w-4 shrink-0 accent-[#505e4d]"
                         />
 
-                        {/* Image container centered */}
-                        <div className="flex items-center justify-center pt-2">
-                          <div className="flex gap-2 flex-wrap justify-center">
-                            {method.iconUrls.map((icon, idx) => (
-                              <img
-                                key={idx}
-                                src={icon.src || "/placeholder.svg"}
-                                alt={method.name}
-                                className={`w-60 h-48 md:w-60 md:h-36 object-contain rounded-lg transition-all ${selectedPaymentMethod === method.id ? " border-[#505e4d]" : " border-gray-200"
-                                  }`}
-                              />
-                            ))}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+                            <div className="min-w-0 pr-1">
+                              <div className="mb-1 flex flex-wrap items-center gap-2">
+                                <p className="truncate text-sm font-semibold text-gray-900">
+                                  <TranslatedText>{meta.title}</TranslatedText>
+                                </p>
+                                <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${meta.badgeClass}`}>
+                                  <TranslatedText>{meta.badge}</TranslatedText>
+                                </span>
+                              </div>
+                              <p className="mt-0.5 text-xs text-gray-600">
+                                <TranslatedText>{meta.description}</TranslatedText>
+                              </p>
+                            </div>
+
+                            <div className="flex w-full shrink-0 justify-start sm:w-[240px] sm:justify-end">
+                              {method.iconUrls.map((icon, idx) => (
+                                <img
+                                  key={idx}
+                                  src={icon.src || "/placeholder.svg"}
+                                  alt={meta.title}
+                                  className="h-[86px] w-auto object-contain sm:h-[96px]"
+                                />
+                              ))}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      </label>
+                      )
+                    })}
+                  </div>
+
+                  <div className="mb-6 flex flex-wrap items-center gap-2 rounded-xl border border-[#d9e0d6] bg-[#f7faf6] px-3 py-2">
+                    <Shield className="h-4 w-4 text-[#505e4d]" />
+                    <p className="text-xs font-medium text-[#455341]">
+                      <TranslatedText>Secure checkout, encrypted payment processing, trusted gateways</TranslatedText>
+                    </p>
                   </div>
 
                   {selectedPaymentMethod === "cod" && (
@@ -1625,7 +1693,8 @@ const Checkout = () => {
                         <span className="font-semibold text-yellow-800"><TranslatedText>Cash on Delivery</TranslatedText></span>
                       </div>
                       <p className="text-sm text-yellow-700">
-                        <TranslatedText>You will pay in cash when your order is delivered to your address. Please have the exact amount ready.</TranslatedText>
+                        <TranslatedText>An  10.00 AED additional cash handling fee will be charged on every (COD) Cash on Delivery  order.</TranslatedText>{" "} <br />
+                        <TranslatedText>COD Fee (Non-Refundable):</TranslatedText> {formatPrice(10)}
                       </p>
                     </div>
                   )}
@@ -1799,6 +1868,13 @@ const Checkout = () => {
                   <span className="text-black">{deliveryCharge === 0 ? <TranslatedText>Free</TranslatedText> : formatPrice(deliveryCharge)}</span>
                 </div>
 
+                {selectedPaymentMethod === "cod" && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600"><TranslatedText>COD Fee (Non-Refundable)</TranslatedText></span>
+                    <span className="text-black">{formatPrice(10)}</span>
+                  </div>
+                )}
+
                 {/* Protection Plans Section */}
                 {protectionItems.length > 0 && (
                   <div className="border-t pt-4">
@@ -1834,7 +1910,7 @@ const Checkout = () => {
 
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600"><TranslatedText>VAT Included</TranslatedText></span>
-                  <span className="text-gray-600">✓</span>
+                  <span className="text-gray-600"><TranslatedText>Included</TranslatedText></span>
                 </div>
 
                 {/* Coupon Section */}
@@ -2054,4 +2130,6 @@ const Checkout = () => {
 }
 
 export default Checkout
+
+
 

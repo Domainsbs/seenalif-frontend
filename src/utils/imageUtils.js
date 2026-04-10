@@ -165,5 +165,5 @@ export const getImageUrl = (product) => {
   if (product.images && product.images.length > 0) return getFullImageUrl(product.images[0])
   
   // Fallback to placeholder
-  return "/placeholder.svg?height=150&width=150"
+  return "/placeholder.svg"
 }

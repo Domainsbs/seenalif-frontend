@@ -46,7 +46,7 @@ const config = {
   NGENIUS_API_KEY: import.meta.env.VITE_NGENIUS_API_KEY,
 
   // App Configuration
-  APP_NAME: "GrabAtoZ",
+  APP_NAME: "Seen Alif",
   APP_VERSION: "1.0.0",
 }
 

@@ -74,7 +74,8 @@ const Footer = ({ className = "" }) => {
             <div className="grid grid-cols-1 lg:grid-cols-[1.45fr_1fr_1fr] gap-5 lg:gap-6 items-start">
               <div className="rounded-2xl p-5 lg:p-6">
                 <img src="/seenalif.png" alt="Seen Alif" width="205" height="64" className="h-14 lg:h-16 w-auto object-contain" />
-                <div className="flex items-center flex-wrap gap-2 mt-5 text-white">
+                <div className="mt-5 w-full lg:max-w-[380px]">
+                  <div className="flex items-center flex-wrap gap-2 text-white">
                   <span className="text-base font-semibold mr-1">Follow Us :</span>
                   <a href="https://www.facebook.com/profile.php?id=61588606711840" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors"><Facebook size={16} /></a>
                   <a href="https://www.instagram.com/seenalifcom/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/45 bg-white/5 hover:bg-white/15 transition-colors"><Instagram size={16} /></a>
@@ -94,35 +95,38 @@ const Footer = ({ className = "" }) => {
                     <FontAwesomeIcon icon={faPinterest} style={{ width: "14px", height: "14px" }} />
                   </a>
                 </div>
+                </div>
 
-                <p className="text-sm font-semibold uppercase tracking-[0.12em] text-white mt-6 mb-2">Newsletter</p>
-                <form className="bg-white rounded-2xl p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.15)]" onSubmit={handleNewsletterSubmit}>
-                  <div className="flex items-center">
-                    <input
-                      type="email"
-                      placeholder="Enter email id"
-                      className="w-full px-4 py-2.5 text-sm bg-transparent text-gray-900 placeholder:text-gray-500 focus:outline-none"
-                      value={newsletterEmail}
-                      onChange={handleNewsletterInput}
+                <div className="w-full lg:max-w-[380px]">
+                  <p className="text-sm font-semibold uppercase tracking-[0.12em] text-white mt-6 mb-2">Newsletter</p>
+                  <form className="bg-white rounded-2xl p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.15)]" onSubmit={handleNewsletterSubmit}>
+                    <div className="flex items-center">
+                      <input
+                        type="email"
+                        placeholder="Enter email id"
+                        className="w-full px-4 py-2.5 text-sm bg-transparent text-gray-900 placeholder:text-gray-500 focus:outline-none"
+                        value={newsletterEmail}
+                        onChange={handleNewsletterInput}
+                      />
+                      <button
+                        aria-label="Submit email"
+                        type="submit"
+                        className="w-11 h-10 rounded-[10px] bg-[#505e4d] text-white inline-flex items-center justify-center hover:bg-[#445241] transition-colors"
+                      >
+                        <ArrowUpRight size={18} />
+                      </button>
+                    </div>
+                  </form>
+                  {showNewsletterModal && (
+                    <NewsletterModal
+                      email={newsletterEmail}
+                      onClose={() => setShowNewsletterModal(false)}
                     />
-                    <button
-                      aria-label="Submit email"
-                      type="submit"
-                      className="w-11 h-10 rounded-[10px] bg-[#505e4d] text-white inline-flex items-center justify-center hover:bg-[#445241] transition-colors"
-                    >
-                      <ArrowUpRight size={18} />
-                    </button>
-                  </div>
-                </form>
-                {showNewsletterModal && (
-                  <NewsletterModal
-                    email={newsletterEmail}
-                    onClose={() => setShowNewsletterModal(false)}
-                  />
-                )}
-                <p className="text-white text-sm mt-3">
-                  Stay up to date with our latest products and news
-                </p>
+                  )}
+                  <p className="text-white text-sm mt-3">
+                    Stay up to date with our latest products and news
+                  </p>
+                </div>
               </div>
 
               <div className="rounded-2xl p-5 lg:col-start-2">
@@ -417,7 +421,7 @@ const Footer = ({ className = "" }) => {
 
           {/* Copyright */}
           <div className="text-center text-sm text-white">
-            <p> 2025 Grabatoz powered by Crown Excel.</p>
+            <p>2025 Seen Alif powered by Crown Excel.</p>
             <p className="mt-1">Develop By <a href="https://techsolutionor.com" target="_blank" rel="noopener noreferrer">Tech Solutionor</a></p>
           </div>
         </div>

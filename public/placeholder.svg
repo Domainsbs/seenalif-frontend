@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300" role="img" aria-label="No image available">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f4f6f3"/>
+      <stop offset="100%" stop-color="#e8ede5"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <g fill="none" stroke="#9aa996" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+    <rect x="90" y="70" width="220" height="160" rx="14"/>
+    <path d="M115 195l55-55 40 40 26-26 49 41"/>
+    <circle cx="248" cy="120" r="14"/>
+  </g>
+  <text x="200" y="262" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#6a7866">No Image</text>
+</svg>

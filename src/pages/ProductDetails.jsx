@@ -2257,7 +2257,7 @@ const ProductDetails = () => {
   }
 
   // SEO: Use custom SEO fields if provided, otherwise fall back to auto-generated values
-  const pdTitle = product.seoTitle || `${product.name} — Grabatoz`
+  const pdTitle = product.seoTitle || `${product.name} - Seen Alif`
   const pdDescription =
     product.seoDescription ||
     (product.shortDescription &&
@@ -2268,7 +2268,7 @@ const ProductDetails = () => {
       String(product.description)
         .replace(/<[^>]+>/g, "")
         .slice(0, 160)) ||
-    `${product.name} available at Grabatoz.`
+    `${product.name} available at Seen Alif.`
 
   const pdCanonicalPath = product.seoCanonicalUrl || getLocalizedPath(`/product/${encodeURIComponent(product.slug || product._id)}`)
   const pdKeywords = product.seoKeywords || (product.tags && product.tags.length > 0 ? product.tags.join(", ") : undefined)
@@ -3261,7 +3261,7 @@ const ProductDetails = () => {
             <div className="space-y-4 rounded-2xl bg-white px-2 pt-4 pb-1 md:px-3 md:pt-4 md:pb-1">
               <div className="rounded-xl px-1 py-2">
                 <p className="mb-2 px-1 text-center text-xs font-medium leading-5 text-slate-700 sm:text-sm md:text-base">
-                  <TranslatedText>Free shipping when you spend AED500 & above. Unlimited destinations in Dubai and Abu Dhabi</TranslatedText>
+                  <TranslatedText>Free shipping when you spend AED500 & above. Unlimited destinations in Abu Dhabi</TranslatedText>
                 </p>
                 <h4 className="mb-3 text-center text-xl font-bold text-slate-900">
                   <TranslatedText>Available coupons</TranslatedText>
@@ -3350,7 +3350,7 @@ const ProductDetails = () => {
                     <div>
                       <h4 className="font-bold text-gray-900 text-sm"><TranslatedText>Express Delivery</TranslatedText></h4>
                       <p className="text-xs text-gray-700">
-                        <TranslatedText>Free shipping when you spend AED500 & above. Unlimited destinations in Dubai and Abu Dhabi</TranslatedText>
+                        <TranslatedText>Free shipping when you spend AED500 & above. Unlimited destinations in Abu Dhabi</TranslatedText>
                       </p>
                     </div>
                   </div>

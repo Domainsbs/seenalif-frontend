@@ -115,7 +115,7 @@ export default function SEO({ title, description, canonicalPath, image, noindex 
       },
       "publisher": {
         "@type": "Organization",
-        "name": "Graba2z",
+        "name": "Seen Alif",
         "logo": {
           "@type": "ImageObject",
           "url": typeof window !== "undefined" ? `${window.location.origin}/logo.png` : ""

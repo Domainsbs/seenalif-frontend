@@ -1400,12 +1400,12 @@ const Shop = () => {
     (seoContent
       ? generateSEOTitle(activeSubcategoryForSEO?.name || categoryObj?.name || "", seoContent)
       : activeSubcategoryForSEO
-        ? `${activeSubcategoryForSEO.name} — Shop`
+        ? `${activeSubcategoryForSEO.name} - Shop`
         : categoryObj
-          ? `${categoryObj.name} — Shop`
+          ? `${categoryObj.name} - Shop`
           : searchQuery?.trim()
-            ? `Search: ${searchQuery.trim()} — Shop`
-            : "Shop — Grabatoz")
+            ? `Search: ${searchQuery.trim()} - Shop`
+            : "Shop - Seen Alif")
 
   const seoDescription =
     customMetaDescription ||
@@ -1415,7 +1415,7 @@ const Shop = () => {
         ? `Browse ${activeSubcategoryForSEO.name} products at great prices.`
         : categoryObj
           ? `Explore top ${categoryObj.name} products.`
-          : "Explore our catalog and find your next purchase at Grabatoz.")
+          : "Explore all categories and discover your next purchase at Seen Alif.")
 
   const buildBreadcrumbPath = () => {
     const parts = [categoryObj?.name]

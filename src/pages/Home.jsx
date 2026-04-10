@@ -668,8 +668,8 @@ const Home = () => {
     <div className="bg-white mt-1">
       {/* SEO Meta Tags for Home Page */}
       <SEO
-        title="Buy Laptops, Mobiles & Electronics Online in UAE | Grabatoz"
-        description="Discover the best deals on laptops, desktops, mobiles, and gaming products in UAE. Grabatoz is your trusted electronics shop in Dubai."
+        title="Seen Alif | Online Shopping in UAE for All Categories"
+        description="Seen Alif is an all-in-one eCommerce marketplace in UAE. Shop fashion, beauty, home, groceries, electronics, and more with secure payments and fast delivery."
         canonicalPath="/"
       />
 
@@ -839,7 +839,9 @@ const Home = () => {
           <h2 className="text-lg font-bold text-gray-900">
             <TranslatedText>Best Sellers</TranslatedText>
           </h2>
-          <button className="text-[#505e4d] hover:text-[#465342] font-medium text-sm"><TranslatedText>View All</TranslatedText></button>
+          <Link to={getLocalizedPath("/shop")} className="text-[#505e4d] hover:text-[#465342] font-medium text-sm">
+            <TranslatedText>View All</TranslatedText>
+          </Link>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
@@ -1592,21 +1594,6 @@ const Home = () => {
 
             <div className="relative grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
               <Link
-                to={getLocalizedPath("/terms-conditions")}
-                className="group rounded-2xl border border-slate-200/80 bg-white/90 p-4 md:p-5 text-center shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 block"
-              >
-                <div className="mx-auto w-12 h-12 md:w-14 md:h-14 rounded-xl bg-lime-50 flex items-center justify-center mb-3">
-                  <CreditCard className="w-6 h-6 md:w-7 md:h-7 text-[#505e4d]" />
-                </div>
-                <h3 className="text-sm md:text-base font-semibold text-slate-900 mb-2">
-                  <TranslatedText>Secure Payment Method</TranslatedText>
-                </h3>
-                <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
-                  <TranslatedText>Available Different secure Payment Methods</TranslatedText>
-                </p>
-              </Link>
-
-              <Link
                 to={getLocalizedPath("/delivery-terms")}
                 className="group rounded-2xl border border-slate-200/80 bg-white/90 p-4 md:p-5 text-center shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 block"
               >
@@ -1614,10 +1601,10 @@ const Home = () => {
                   <Truck className="w-6 h-6 md:w-7 md:h-7 text-[#505e4d]" />
                 </div>
                 <h3 className="text-sm md:text-base font-semibold text-slate-900 mb-2">
-                  <TranslatedText>Extreme Fast Delivery</TranslatedText>
+                  <TranslatedText>Express Delivery</TranslatedText>
                 </h3>
                 <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
-                  <TranslatedText>Fast and convenient From door to door delivery</TranslatedText>
+                  <TranslatedText>Free shipping when you spend AED500 & above. Unlimited destinations in Abu Dhabi</TranslatedText>
                 </p>
               </Link>
 
@@ -1626,13 +1613,28 @@ const Home = () => {
                 className="group rounded-2xl border border-slate-200/80 bg-white/90 p-4 md:p-5 text-center shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 block"
               >
                 <div className="mx-auto w-12 h-12 md:w-14 md:h-14 rounded-xl bg-lime-50 flex items-center justify-center mb-3">
+                  <Truck className="w-6 h-6 md:w-7 md:h-7 text-[#505e4d]" />
+                </div>
+                <h3 className="text-sm md:text-base font-semibold text-slate-900 mb-2">
+                  <TranslatedText>Delivery & Returns Policy</TranslatedText>
+                </h3>
+                <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
+                  <TranslatedText>Delivery in remote areas will be considered as normal delivery which takes place with 1 working day delivery.</TranslatedText>
+                </p>
+              </Link>
+
+              <Link
+                to={getLocalizedPath("/terms-conditions")}
+                className="group rounded-2xl border border-slate-200/80 bg-white/90 p-4 md:p-5 text-center shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 block"
+              >
+                <div className="mx-auto w-12 h-12 md:w-14 md:h-14 rounded-xl bg-lime-50 flex items-center justify-center mb-3">
                   <Heart className="w-6 h-6 md:w-7 md:h-7 text-[#505e4d]" />
                 </div>
                 <h3 className="text-sm md:text-base font-semibold text-slate-900 mb-2">
-                  <TranslatedText>Quality & Savings</TranslatedText>
+                  <TranslatedText>Warranty Information</TranslatedText>
                 </h3>
                 <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
-                  <TranslatedText>Comprehensive quality control and affordable price</TranslatedText>
+                  <TranslatedText>Standard warranty applies as per manufacturer terms</TranslatedText>
                 </p>
               </Link>
 

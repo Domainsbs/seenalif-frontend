@@ -43,7 +43,7 @@ const ShopLanding = () => {
             <TranslatedText>Browse Our Collection</TranslatedText>
           </h1>
           <p className="text-gray-600 max-w-2xl">
-            <TranslatedText>Discover our full range of premium laptops, smartphones, and electronics. High-quality tech delivered to your door.</TranslatedText>
+            <TranslatedText>Discover all categories in one place, including fashion, beauty, home essentials, electronics, and everyday needs.</TranslatedText>
           </p>
         </div>
       </div>
@@ -122,7 +122,7 @@ const ShopLanding = () => {
       <section className="container mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between mb-10">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-            <TranslatedText>Trending Tech</TranslatedText>
+            <TranslatedText>Trending Now</TranslatedText>
           </h2>
           <Link to={getLocalizedPath("/shop")} className="text-lime-600 font-semibold flex items-center gap-1 hover:underline">
             <TranslatedText>View All Deals</TranslatedText> <ArrowRight size={16} />
@@ -152,7 +152,7 @@ const ShopLanding = () => {
               <TranslatedText>Summer Sale 2026</TranslatedText>
             </h2>
             <p className="text-gray-400 mb-8 text-lg">
-              <TranslatedText>Get up to 40% off on all premium laptops and accessories. This week only!</TranslatedText>
+              <TranslatedText>Get up to 40% off across popular categories and everyday essentials. Limited-time deals.</TranslatedText>
             </p>
             <Link 
               to={getLocalizedPath("/shop")} 

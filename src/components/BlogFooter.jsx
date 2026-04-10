@@ -206,13 +206,13 @@ const Footer = () => {
             {/* Logo (replace src with V Perfumes white logo path) */}
             <img
               src="/logo.png"
-              alt="Grab– White Logo"
+              alt="Seen Alif White Logo"
               className="h-14 w-auto opacity-90"
               loading="lazy"
             />
 
             <p className="text-sm md:text-base text-gray-300 max-w-3xl leading-relaxed">
-              Graba2z is a UAE-based e-commerce platform specializing in premium tech products, including laptops, accessories, and gadgets. Established in 2025, it offers fast, secure delivery across the UAE through its user-friendly mobile app. Headquartered in Bur Dubai, Graba2z is committed to providing genuine products and exceptional customer service.
+              Seen Alif is a UAE-based all-category eCommerce marketplace for fashion, beauty, home, electronics, daily essentials, and more. We deliver across the UAE with secure payments, trusted products, and customer-first support.
             </p>
 
             <div className="mt-2">
@@ -249,18 +249,18 @@ const Footer = () => {
         <div className="border-t border-gray-700 mt-12 py-5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="order-2 md:order-1 text-sm text-white text-center md:text-left">
-              © {new Date().getFullYear()} Grabatoz Powered By Crown Excel
+              © {new Date().getFullYear()} Seen Alif Powered By Crown Excel
             </p>
             <nav aria-label="Footer links" className="order-1 md:order-2 text-sm">
               <ul className="flex items-center gap-5 text-white">
                 <li>
-                <Link to="https://www.grabatoz.ae/privacy-policy" target='_blank' className="hover:text-white transition-colors">Privacy</Link>
+                <Link to="https://www.seenalif.com/privacy-policy" target='_blank' className="hover:text-white transition-colors">Privacy</Link>
                 </li>
                 <li>
-                  <Link to="https://www.grabatoz.ae/disclaimer-policy" target='_blank' className="hover:text-white transition-colors">Disclaimer</Link>
+                  <Link to="https://www.seenalif.com/disclaimer-policy" target='_blank' className="hover:text-white transition-colors">Disclaimer</Link>
                 </li>
                 <li>
-                  <Link to="https://www.grabatoz.ae/contact" target='_blank' className="hover:text-white transition-colors">Contact</Link>
+                  <Link to="https://www.seenalif.com/contact" target='_blank' className="hover:text-white transition-colors">Contact</Link>
                 </li>
               </ul>
             </nav>

@@ -344,7 +344,7 @@ export default function DeliveryInfo() {
                     </li>
                     <li className="flex items-start gap-2">
                       <Info className="w-5 h-5 text-[#505e4d] mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">COD Handling Fee: AED 5.00 (Non-refundable)</span>
+                      <span className="text-gray-700">COD Handling Fee: AED 10.00 (Non-refundable)</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <DollarSign className="w-5 h-5 text-[#505e4d] mt-0.5 flex-shrink-0" />
@@ -353,22 +353,22 @@ export default function DeliveryInfo() {
                   </ul>
                 </div>
 
-                <div className="bg-gradient-to-br from-[#505e4d] to-[#505e4d] rounded-xl p-6 border-2 border-[#505e4d] relative overflow-hidden">
-                  <div className="absolute top-3 right-3 bg-[#505e4d] text-white text-xs font-bold px-2 py-1 rounded-full">
+                <div className="bg-gradient-to-br from-[#505e4d] to-[#505e4d] rounded-xl p-6 border-2 border-[#505e4d] relative overflow-hidden text-white">
+                  <div className="absolute top-3 right-3 bg-white/15 border border-white/30 text-white text-xs font-bold px-2 py-1 rounded-full">
                     FREE DELIVERY
                   </div>
                   <div className="flex items-center gap-2 mb-4">
-                    <DollarSign className="w-5 h-5 text-[#505e4d]" />
-                    <span className="text-lg font-semibold text-gray-900">AED 500 or Above</span>
+                    <DollarSign className="w-5 h-5 text-white" />
+                    <span className="text-lg font-semibold text-white">AED 500 or Above</span>
                   </div>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-2">
-                      <CheckCircle className="w-5 h-5 text-[#505e4d] mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700 font-medium">FREE delivery</span>
+                      <CheckCircle className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                      <span className="text-white font-medium">FREE delivery</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <Info className="w-5 h-5 text-[#505e4d] mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">COD Handling Fee: AED 5.00 only (Non-refundable)</span>
+                      <Info className="w-5 h-5 text-white mt-0.5 flex-shrink-0" />
+                      <span className="text-white/95">COD Handling Fee: AED 10.00 only (Non-refundable)</span>
                     </li>
                   </ul>
                 </div>
@@ -401,7 +401,7 @@ export default function DeliveryInfo() {
                   "Free Shipping is applicable on a single order (one order ID) with a value of AED 500 or more, excluding any applied voucher or discount codes.",
                   "Offer is valid for UAE customers only.",
                   "For bulk orders or international deliveries, please refer to our Bulk Delivery Section or contact Customer Care.",
-                  "COD Handling Fee: AED 5.00 (Non-refundable)",
+                  "COD Handling Fee: AED 10.00 (Non-refundable)",
                   "Delivery Schedule: No deliveries on Sundays or UAE Public Holidays",
                   "Rates mentioned are per order"
                 ].map((note, idx) => (

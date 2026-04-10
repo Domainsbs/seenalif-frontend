@@ -323,8 +323,8 @@ const Cart = () => {
               <img src={getFullImageUrl(item.image) || "/placeholder.svg"} alt={item.name} className="w-full h-full object-contain" />
             </div>
             <div className="flex-1 ml-4">
-              <h3 className="text-base font-medium text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">
-                <TranslatedText text={item.name.length > 30 ? item.name.slice(0, 25) + "..." : item.name} />
+              <h3 className="max-w-[180px] text-sm font-medium leading-5 text-gray-900 line-clamp-2 break-words">
+                <TranslatedText text={item.name || ""} />
               </h3>
               <p className="mt-1 text-sm text-gray-500">{item.brand?.name || 'N/A'}</p>
               {item.selectedColorData && (
