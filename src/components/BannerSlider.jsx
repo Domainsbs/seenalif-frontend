@@ -3,12 +3,11 @@
 import { useState, useEffect } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Link } from "react-router-dom"
-import { getOptimizedImageUrl } from "../utils/imageUtils"
+import { getFullImageUrl } from "../utils/imageUtils"
 import { useLanguage } from "../context/LanguageContext"
 
 const FALLBACK_BANNER_IMAGE =
   "https://api.grabatoz.ae/uploads//banners/banner-projector_final-1767447672755-684802807.webp"
-const HERO_BANNER_ASPECT_RATIO = "2475 / 849"
 
 const debugHeroBanners = (...args) => {
   if (import.meta?.env?.VITE_DEBUG_BANNERS === "true") {
@@ -53,22 +52,18 @@ const BannerSlider = ({ banners = [] }) => {
   if (!banners || banners.length === 0) {
     return (
       <section className="relative w-[96%] sm:w-[95%] lg:w-[94%] mx-auto overflow-hidden py-2 sm:py-3">
-        <div
-          className="w-full bg-gray-200 animate-pulse rounded-2xl"
-          style={{ aspectRatio: HERO_BANNER_ASPECT_RATIO }}
-        />
+        <div className="w-full bg-gray-200 animate-pulse rounded-2xl aspect-[2475/849]" />
       </section>
     )
   }
 
-  const renderBannerContent = (banner, imageWidth, fetchPriority = "auto") => {
+  const renderBannerContent = (banner, fetchPriority = "auto") => {
     if (!banner) return null
 
-    const bannerImage =
-      getOptimizedImageUrl(banner.image, { width: imageWidth, height: 849, quality: 68 }) || FALLBACK_BANNER_IMAGE
+    const bannerImage = getFullImageUrl(banner.image) || FALLBACK_BANNER_IMAGE
 
     const content = (
-      <>
+      <div className="relative block w-full">
         <img
           src={bannerImage}
           alt={banner.title || "Banner"}
@@ -76,10 +71,10 @@ const BannerSlider = ({ banners = [] }) => {
           loading={fetchPriority === "high" ? "eager" : "lazy"}
           width="2475"
           height="849"
-          className="block w-full h-full object-cover"
+          className="block w-full h-auto"
         />
         <div className="absolute inset-0 bg-black bg-opacity-10" />
-      </>
+      </div>
     )
 
     const hasValidLink = typeof banner.buttonLink === "string" && banner.buttonLink.trim() !== ""
@@ -98,20 +93,20 @@ const BannerSlider = ({ banners = [] }) => {
 
       if (isExternal) {
         return (
-          <a href={link} target="_blank" rel="noopener noreferrer" className="absolute inset-0 cover cursor-pointer">
+          <a href={link} target="_blank" rel="noopener noreferrer" className="block w-full cursor-pointer">
             {content}
           </a>
         )
       }
 
       return (
-        <Link to={getLocalizedPath(link)} className="absolute inset-0 cover cursor-pointer">
+        <Link to={getLocalizedPath(link)} className="block w-full cursor-pointer">
           {content}
         </Link>
       )
     }
 
-    return <div className="absolute inset-0 cover">{content}</div>
+    return <div className="block w-full">{content}</div>
   }
 
   return (
@@ -120,12 +115,9 @@ const BannerSlider = ({ banners = [] }) => {
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
-      <div
-        className="relative w-full overflow-hidden"
-        style={{ aspectRatio: HERO_BANNER_ASPECT_RATIO }}
-      >
-        <div className="h-full w-full relative overflow-hidden rounded-2xl">
-          {renderBannerContent(currentBanner, 1600, "high")}
+      <div className="relative w-full overflow-hidden rounded-2xl">
+        <div className="relative w-full">
+          {renderBannerContent(currentBanner, "high")}
         </div>
 
         {banners.length > 1 && (
