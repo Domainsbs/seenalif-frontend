@@ -8,6 +8,7 @@ import { useLanguage } from "../context/LanguageContext"
 
 const FALLBACK_BANNER_IMAGE =
   "https://api.grabatoz.ae/uploads//banners/banner-projector_final-1767447672755-684802807.webp"
+const HERO_BANNER_ASPECT_RATIO = "2475 / 849"
 
 const debugHeroBanners = (...args) => {
   if (import.meta?.env?.VITE_DEBUG_BANNERS === "true") {
@@ -51,8 +52,11 @@ const BannerSlider = ({ banners = [] }) => {
 
   if (!banners || banners.length === 0) {
     return (
-      <section className="relative w-[96%] sm:w-[95%] lg:w-[94%] mx-auto h-[170px] sm:h-[250px] md:h-[300px] lg:h-[310px] overflow-hidden">
-        <div className="w-full h-full bg-gray-200 animate-pulse rounded-2xl" />
+      <section className="relative w-[96%] sm:w-[95%] lg:w-[94%] mx-auto overflow-hidden py-2 sm:py-3">
+        <div
+          className="w-full bg-gray-200 animate-pulse rounded-2xl"
+          style={{ aspectRatio: HERO_BANNER_ASPECT_RATIO }}
+        />
       </section>
     )
   }
@@ -61,7 +65,7 @@ const BannerSlider = ({ banners = [] }) => {
     if (!banner) return null
 
     const bannerImage =
-      getOptimizedImageUrl(banner.image, { width: imageWidth, height: 400, quality: 68 }) || FALLBACK_BANNER_IMAGE
+      getOptimizedImageUrl(banner.image, { width: imageWidth, height: 849, quality: 68 }) || FALLBACK_BANNER_IMAGE
 
     const content = (
       <>
@@ -70,9 +74,9 @@ const BannerSlider = ({ banners = [] }) => {
           alt={banner.title || "Banner"}
           fetchPriority={fetchPriority}
           loading={fetchPriority === "high" ? "eager" : "lazy"}
-          width="1600"
-          height="620"
-          className="block w-full h-full bg-cover"
+          width="2475"
+          height="849"
+          className="block w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-10" />
       </>
@@ -116,7 +120,10 @@ const BannerSlider = ({ banners = [] }) => {
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
-      <div className="relative h-[170px] sm:h-[250px] md:h-[300px] lg:h-[310px] w-full overflow-hidden">
+      <div
+        className="relative w-full overflow-hidden"
+        style={{ aspectRatio: HERO_BANNER_ASPECT_RATIO }}
+      >
         <div className="h-full w-full relative overflow-hidden rounded-2xl">
           {renderBannerContent(currentBanner, 1600, "high")}
         </div>
