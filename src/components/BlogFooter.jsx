@@ -76,7 +76,7 @@ const Footer = () => {
 
   if (loading) {
     return (
-  <footer className="bg-[#1f1f39] text-white py-12">
+  <footer className="bg-[#505e4d] text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
@@ -102,7 +102,7 @@ const Footer = () => {
   }
 
   return (
-  <footer className="bg-[#1f1f39] text-white pt-12">
+  <footer className="bg-[#505e4d] text-white pt-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -127,7 +127,7 @@ const Footer = () => {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium leading-tight group-hover:text-lime-300 transition-colors line-clamp-2">
+                    <h4 className="text-sm font-medium leading-tight group-hover:text-white/90 transition-colors line-clamp-2">
                       {post.title}
                     </h4>
                     <p className="text-xs text-gray-400 mt-1">
@@ -160,7 +160,7 @@ const Footer = () => {
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium  group-hover:text-lime-300 ">
+                    <h4 className="text-sm font-medium  group-hover:text-white/90 ">
                       {post.title}
                     </h4>
                     <p className="text-xs text-gray-400 mt-1">
@@ -186,8 +186,8 @@ const Footer = () => {
                   className="flex items-center justify-between group p-2 rounded transition-colors"
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-gray-400 transition-colors group-hover:text-lime-300"><strong>→</strong></span>
-                    <span className="text-sm font-medium transition-colors group-hover:text-lime-300">
+                    <span className="text-gray-400 transition-colors group-hover:text-white/90"><strong>→</strong></span>
+                    <span className="text-sm font-medium transition-colors group-hover:text-white/90">
                       {category.name}
                     </span>
                   </div>
@@ -201,11 +201,11 @@ const Footer = () => {
         </div>
 
         {/* Brand Spotlight */}
-        <div className="border-t border-gray-800 mt-12 pt-5 text-center">
+        <div className=" mt-12 pt-5 text-center">
           <div className="flex flex-col items-center gap-5">
             {/* Logo (replace src with V Perfumes white logo path) */}
             <img
-              src="/logo.png"
+              src="/seenalif.png"
               alt="Seen Alif White Logo"
               className="h-14 w-auto opacity-90"
               loading="lazy"
@@ -219,19 +219,20 @@ const Footer = () => {
               <span className="sr-only">Follow Us</span>
               <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
                 {[
-                  { name: 'Facebook', href: 'https://www.facebook.com/grabatozae/', Icon: FaFacebookF, color: '#1877F2' },
-                  { name: 'X', href: 'https://x.com/GrabAtoz', Icon: FaXTwitter, color: '#000000' },
-                  { name: 'Instagram', href: 'https://www.instagram.com/grabatoz/', Icon: FaInstagram, color: '#E4405F' },
-                  { name: 'LinkedIn', href: 'https://www.linkedin.com/company/grabatozae', Icon: FaLinkedinIn, color: '#0A66C2' },
-                  { name: 'Pinterest', href: 'https://www.pinterest.com/grabatoz/', Icon: FaPinterestP, color: '#E60023' },
-                  { name: 'TikTok', href: 'https://www.tiktok.com/@grabatoz', Icon: FaTiktok, color: '#000000' },
-                  { name: 'YouTube', href: 'https://www.youtube.com/@grabAtoZ', Icon: FaYoutube, color: '#FF0000' },
+                  { name: 'Facebook', href: '', Icon: FaFacebookF, color: '#1877F2' },
+                  { name: 'X', href: '', Icon: FaXTwitter, color: '#000000' },
+                  { name: 'Instagram', href: '', Icon: FaInstagram, color: '#E4405F' },
+                  { name: 'LinkedIn', href: '', Icon: FaLinkedinIn, color: '#0A66C2' },
+                  { name: 'Pinterest', href: '', Icon: FaPinterestP, color: '#E60023' },
+                  { name: 'TikTok', href: '', Icon: FaTiktok, color: '#000000' },
+                  { name: 'YouTube', href: '', Icon: FaYoutube, color: '#FF0000' },
                 ].map(({ name, href, Icon, color }) => (
                   <a
                     key={name}
                     href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target={href ? '_blank' : undefined}
+                    rel={href ? 'noopener noreferrer' : undefined}
+                    onClick={!href ? (e) => e.preventDefault() : undefined}
                     className="inline-flex items-center justify-center w-8 h-8 md:w-9 md:h-9 rounded-full bg-white border border-gray-200 text-current hover:bg-gray-50 transition-colors"
                     style={{ color }}
                     aria-label={name}
@@ -246,7 +247,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright Section */}
-        <div className="border-t border-gray-700 mt-12 py-5">
+        <div className="border-t border-white mt-12 py-5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="order-2 md:order-1 text-sm text-white text-center md:text-left">
               © {new Date().getFullYear()} Seen Alif Powered By Crown Excel
@@ -272,3 +273,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

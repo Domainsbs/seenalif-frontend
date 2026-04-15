@@ -496,7 +496,7 @@ class ProductCacheService {
     this.CACHE_EXPIRY = 8 * 60 * 60 * 1000 // 8hrs
     this.MAX_CACHE_SIZE = 1 * 1024 * 1024 // 1MB per chunk (reduced)
     this.MAX_CHUNKS = 20 // More chunks, smaller size
-    this.CACHE_SCHEMA_VERSION = 2
+    this.CACHE_SCHEMA_VERSION = 3
   }
 
   // Compress data using JSON.stringify and btoa
@@ -769,11 +769,41 @@ class ProductCacheService {
   // Fetch products from API and cache them
   async fetchAndCacheProducts() {
     try {
-      const response = await fetch(`${config.API_URL}/api/products?cacheSchema=${this.CACHE_SCHEMA_VERSION}`)
-      if (!response.ok) {
-        throw new Error("Failed to fetch products")
+      const pageSize = 200
+      let currentPage = 1
+      let totalPages = 1
+      let allProducts = []
+
+      // Fetch via paginated API to guarantee we load the complete catalog.
+      do {
+        const paginatedUrl = `${config.API_URL}/api/products/paginated?page=${currentPage}&limit=${pageSize}&cacheSchema=${this.CACHE_SCHEMA_VERSION}`
+        const response = await fetch(paginatedUrl)
+        if (!response.ok) {
+          throw new Error("Failed to fetch products")
+        }
+
+        const payload = await response.json()
+        const pageProducts = Array.isArray(payload?.products) ? payload.products : []
+        allProducts.push(...pageProducts)
+
+        totalPages = Number(payload?.totalPages || 1)
+        currentPage += 1
+      } while (currentPage <= totalPages)
+
+      // Fallback for environments that still return legacy array response.
+      if (allProducts.length === 0) {
+        const response = await fetch(`${config.API_URL}/api/products?cacheSchema=${this.CACHE_SCHEMA_VERSION}`)
+        if (!response.ok) {
+          throw new Error("Failed to fetch products")
+        }
+        const legacyPayload = await response.json()
+        allProducts = Array.isArray(legacyPayload) ? legacyPayload : []
       }
-      const products = await response.json()
+
+      // Remove accidental duplicates by _id in case of race conditions between page fetches.
+      const products = Array.from(
+        new Map(allProducts.filter(Boolean).map((product) => [product?._id, product])).values(),
+      ).filter((product) => product && product._id)
 
       // Always try to cache products
       try {

@@ -186,7 +186,7 @@ const Header = () => {
             <Link to="/" className="inline-flex items-center">
               {showLogo ? (
                 <img
-                  src="/admin-logo.svg"
+                  src="/seenalif.webp"
                   alt="Seen Alif logo"
                   className="h-8 w-auto object-contain"
                   onError={() => setShowLogo(false)}
@@ -225,31 +225,31 @@ const Header = () => {
         {isMobileSearchOpen && (
           <div className="md:hidden pb-3">
             <form onSubmit={handleSearch} className="w-full">
-              <div className="flex items-center bg-white rounded-md overflow-hidden">
+              <div className="relative">
+                <Search size={18} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                 <input
                   type="text"
-                  placeholder="Search"
+                  placeholder="Search Products"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 h-10 px-3 outline-none border border-lime-300"
+                  className="w-full h-11 rounded-xl border border-gray-300 bg-white pl-10 pr-24 text-[15px] text-gray-700 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#505e4d]/20 focus:border-[#505e4d]"
                   autoFocus
                 />
-                <div className="flex items-center h-10 mr-1  text-white">
+                <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center text-white">
                   <button
                     type="submit"
                     aria-label="Search"
-                    className="h-10 w-10 flex items-center justify-center bg-lime-500 hover:bg-lime-600/90"
+                    className="h-8 w-8 flex items-center justify-center rounded-lg bg-[#505e4d] hover:bg-[#445142] transition-colors"
                   >
-                    <Search size={22} />
+                    <Search size={16} />
                   </button>
-                  <span aria-hidden className="h-6 w-px" />
                   <button
                     type="button"
                     aria-label="Close search"
                     onClick={() => setIsMobileSearchOpen(false)}
-                    className="h-10 w-10 flex items-center justify-center text-gray-500 hover:text-gray-700 ml-1"
+                    className="h-8 w-8 flex items-center justify-center text-gray-500 hover:text-gray-700 ml-1"
                   >
-                    <X size={28} />
+                    <X size={22} />
                   </button>
                 </div>
               </div>
@@ -262,7 +262,7 @@ const Header = () => {
           <Link to="/" className="flex items-center space-x-2">
             {showLogo ? (
               <img
-                src="/admin-logo.svg"
+                src="/seenalif.webp"
                 alt="Seen Alif logo"
                 className="h-14 w-auto object-contain"
                 onError={() => setShowLogo(false)}
@@ -271,28 +271,23 @@ const Header = () => {
               <h1 className="text-xl font-bold text-gray-900">Seen Alif</h1>
             )}
           </Link>
-          <form onSubmit={handleSearch} className="flex-1 max-w-lg mx-8">
-            <div className="flex items-center gap-2">
+          <form onSubmit={handleSearch} className="flex-1 max-w-3xl mx-8">
+            <div className="relative">
+              <Search size={20} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
               <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search Products"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-12 px-4 border border-gray-300  focus:outline-none focus:ring-1 focus:ring-lime-500 focus:border-lime-500"
+                className="w-full h-12 rounded-xl border border-gray-300 bg-white pl-12 pr-4 text-base text-gray-700 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#505e4d]/20 focus:border-[#505e4d]"
               />
-              <button
-                type="submit"
-                aria-label="Search"
-                className="h-12 w-14 bg-lime-500 text-white  flex items-center justify-center hover:bg-lime-600 transition-colors"
-              >
-                <Search size={16} />
-              </button>
             </div>
+            <button type="submit" className="sr-only" aria-label="Search Products">Search</button>
           </form>
           <Link
             to="https://www.seenalif.com/"
             target="_blank"
-            className="hidden md:flex items-center space-x-2 px-6 py-2 border hover:border-2 border-gray-300 hover:border-lime-300 text-black hover:bg-lime-500 hover:text-white transition-colors font-medium"
+            className="hidden md:inline-flex items-center gap-2 h-12 px-5 rounded-xl border border-[#505e4d] bg-[#505e4d] text-white hover:bg-[#445142] hover:border-[#445142] transition-colors font-semibold shadow-sm"
           >
             <ShoppingBag size={18} />
             <span>Shop Now</span>
@@ -302,7 +297,7 @@ const Header = () => {
         </div>
 
         {/* Desktop categories bar */}
-        <div className="hidden md:block bg-lime-500">
+        <div className="hidden md:block bg-[#505e4d]">
           <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 py-2">
             <nav className="py-1">
               <ul ref={navListRef} className="flex w-full items-center justify-center gap-12 whitespace-nowrap overflow-visible relative">
@@ -313,7 +308,7 @@ const Header = () => {
                       ref={moreBtnRef}
                       type="button"
                       onClick={() => setIsMoreOpen((v) => !v)}
-                      className="inline-flex items-center font-medium text-white hover:text-lime-100 transition-colors px-0 py-0"
+                      className="inline-flex items-center font-medium text-white hover:text-white/90 transition-colors px-0 py-0"
                       aria-haspopup="menu"
                       aria-expanded={isMoreOpen}
                     >
@@ -338,7 +333,7 @@ const Header = () => {
 
                 {/* All in one always visible */}
                 {/* <li ref={allInOneRef}>
-                  <Link to="/" className="text-white hover:text-lime-100 font-medium">
+                  <Link to="/" className="text-white hover:text-white/90 font-medium">
                     All in one
                   </Link>
                 </li> */}
@@ -348,7 +343,7 @@ const Header = () => {
                   <li key={category._id}>
                     <Link
                       to={getLocalizedPath(`/blogs/${category.randomBlogSlug}`)}
-                      className="text-white hover:text-lime-100 font-medium"
+                      className="text-white hover:text-white/90 font-medium"
                     >
                       {category.name}
                     </Link>
@@ -385,7 +380,7 @@ const Header = () => {
             <nav className="absolute top-0 left-0 h-full w-80 max-w-[85vw] bg-white shadow-xl flex flex-col">
               {/* Drawer Header: first bar styled exactly like the screenshot */}
               <div className="">
-                <div className="flex items-center justify-between bg-lime-500 text-white h-12 w-full px-3">
+                <div className="flex items-center justify-between bg-[#505e4d] text-white h-12 w-full px-3">
                   <button
                     onClick={() => {
                       navigate("/")
@@ -418,7 +413,7 @@ const Header = () => {
                       className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 text-gray-800 text-medium font-medium"
                     >
                       <span>{category.name}</span>
-                      <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-lime-500 text-white">
+                      <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-[#505e4d] text-white">
                         <ChevronRight size={18} />
                       </span>
                     </Link>

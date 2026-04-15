@@ -71,16 +71,16 @@ const BlogHeroSection = ({ featuredBlogs = [] }) => {
 
   if (!featuredBlogs || featuredBlogs.length === 0) {
     return (
-      <section className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12">
+      <section className="w-full bg-gradient-to-br from-[#f7f8f5] via-[#eef2ea] to-[#e4ebe0] py-12">
         <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
           <div className="text-center py-12">
             <div className="flex items-center justify-center mb-4">
-              <Sparkles className="w-8 h-8 text-lime-400 mr-2" />
-              <span className="text-lime-400 text-lg font-medium">Tech Insights & Stories</span>
+              <Sparkles className="w-8 h-8 text-[#505e4d] mr-2" />
+              <span className="text-[#505e4d] text-lg font-medium">Everything you’re looking for, all in one place</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Welcome to our Blog</h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Discover the latest in technology, expert reviews, buying guides, and industry insights
+            <h1 className="text-4xl md:text-5xl font-bold text-[#1f2a1d] mb-4">Welcome to our Blog</h1>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+              Explore endless categories — tech, fashion, home, lifestyle and more, with trusted reviews and smart buying guides.
             </p>
           </div>
         </div>
@@ -89,16 +89,16 @@ const BlogHeroSection = ({ featuredBlogs = [] }) => {
   }
 
   return (
-    <section className="w-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12">
+    <section className="w-full bg-gradient-to-br from-[#f7f8f5] via-[#eef2ea] to-[#e4ebe0] py-12">
       <div className="w-full max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12">
         {/* Section Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-3">
-            <Sparkles className="w-6 h-6 text-lime-400 mr-2" />
-            <span className="text-lime-400 text-lg font-semibold">Featured Articles</span>
+            <Sparkles className="w-6 h-6 text-[#505e4d] mr-2" />
+            <span className="text-[#505e4d] text-lg font-semibold">Featured Articles</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Welcome to our Blogs</h2>
-          <p className="text-gray-300 max-w-2xl mx-auto">Discover our hand-picked featured articles</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#1f2a1d] mb-2">Welcome to our Blogs</h2>
+          <p className="text-gray-700 max-w-2xl mx-auto">Discover our hand-picked featured articles</p>
         </div>
 
         <div className="relative group">
@@ -170,14 +170,14 @@ const BlogHeroSection = ({ featuredBlogs = [] }) => {
                           <div className="p-6 w-full">
                             {/* Featured Badge */}
                             <div className="mb-3">
-                              <span className="inline-flex items-center gap-1.5 bg-lime-500 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                              <span className="inline-flex items-center gap-1.5 bg-[#505e4d] text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
                                 <Sparkles className="w-3 h-3" />
                                 Featured
                               </span>
                             </div>
                             
                             {/* Title */}
-                            <h3 className="text-white text-xl font-bold mb-2 line-clamp-2 group-hover/card:text-lime-400 transition-colors">
+                            <h3 className="text-white text-xl font-bold mb-2 line-clamp-2 group-hover/card:text-[#dbe6d7] transition-colors">
                               {blog.title}
                             </h3>
                             

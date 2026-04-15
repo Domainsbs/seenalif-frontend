@@ -21,7 +21,7 @@ import "rc-slider/assets/index.css"
 import Slider from "rc-slider"
 
 const API_BASE_URL = `${config.API_URL}`
-const PRODUCTS_BATCH_SIZE = 16
+const PRODUCTS_BATCH_SIZE = 15
 
 // Right-anchored custom dropdown to avoid right overflow
 const SortDropdown = ({ value, onChange }) => {
@@ -2947,7 +2947,8 @@ const Shop = () => {
                   )}
                 </h1>
                 <p className="mt-2 text-sm font-semibold text-[#505e4d]">
-                  {products.length} <TranslatedText>products found</TranslatedText>
+                  <TranslatedText>Showing</TranslatedText> {Math.min(productsToShow, products.length)}{" "}
+                  <TranslatedText>of</TranslatedText> {products.length} <TranslatedText>products found</TranslatedText>
                 </p>
               </div>
 
@@ -3025,4 +3026,3 @@ const Shop = () => {
 }
 
 export default Shop
-
