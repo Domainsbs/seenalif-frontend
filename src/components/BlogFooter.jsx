@@ -246,6 +246,7 @@ const Footer = () => {
           </div>
         </div>
 
+
         {/* Copyright Section */}
         <div className="border-t border-white mt-12 py-5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">

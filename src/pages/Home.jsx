@@ -73,9 +73,13 @@ const Home = () => {
   const navigate = useNavigate()
   const [brands, setBrands] = useState([])
   const [brandSlide, setBrandSlide] = useState(0)
-  const [hpProducts, setHpProducts] = useState([])
-  const [dellProducts, setDellProducts] = useState([])
+  const [barcodeScannersProducts, setBarcodeScannersProducts] = useState([])
+  const [printersProducts, setPrintersProducts] = useState([])
+  const [posMachinesProducts, setPosMachinesProducts] = useState([])
   const [accessoriesProducts, setAccessoriesProducts] = useState([])
+  const [accessoriesConsumablesProducts, setAccessoriesConsumablesProducts] = useState([])
+  const [accessoriesIdCardPrintersProducts, setAccessoriesIdCardPrintersProducts] = useState([])
+  const [accessoriesTimeAttendanceProducts, setAccessoriesTimeAttendanceProducts] = useState([])
   const [acerProducts, setAcerProducts] = useState([])
   const [asusProducts, setAsusProducts] = useState([])
   const [networkingProducts, setNetworkingProducts] = useState([])
@@ -194,8 +198,6 @@ const Home = () => {
         let settingsData = defaultSettings
         let sectionsData = []
         let featured = []
-        let hpData = []
-        let dellData = []
         let acerData = []
         let asusData = []
         let msiData = []
@@ -242,8 +244,6 @@ const Home = () => {
           featured = Array.isArray(homePayload.featuredProducts) ? homePayload.featuredProducts : []
 
           const byBrand = homePayload.brandProducts || {}
-          hpData = Array.isArray(byBrand.hp) ? byBrand.hp : []
-          dellData = Array.isArray(byBrand.dell) ? byBrand.dell : []
           acerData = Array.isArray(byBrand.acer) ? byBrand.acer : []
           asusData = Array.isArray(byBrand.asus) ? byBrand.asus : []
           msiData = Array.isArray(byBrand.msi) ? byBrand.msi : []
@@ -317,20 +317,51 @@ const Home = () => {
           }
         }
 
-        const findSubCategoryIdByName = (nodes, targetName) => {
+        const normalizeCategoryName = (value) => String(value || "").trim().toLowerCase()
+
+        const findCategoryNodeByNames = (nodes, targetNames = []) => {
           if (!Array.isArray(nodes)) return null
-          const target = String(targetName || "").trim().toLowerCase()
+
+          const normalizedTargets = targetNames.map(normalizeCategoryName).filter(Boolean)
+          if (!normalizedTargets.length) return null
+
+          let matchedRootCategory = null
           const stack = [...nodes]
+
           while (stack.length) {
             const node = stack.pop()
             if (!node) continue
-            if (String(node.name || "").trim().toLowerCase() === target && node._id) return node._id
-            if (Array.isArray(node.children) && node.children.length) stack.push(...node.children)
+
+            const nodeName = normalizeCategoryName(node.name)
+            if (normalizedTargets.includes(nodeName) && node._id) {
+              const isSubCategoryNode = Boolean(node.level || node.category || node.parentSubCategory)
+              if (isSubCategoryNode) return node
+              if (!matchedRootCategory) matchedRootCategory = node
+            }
+
+            if (Array.isArray(node.children) && node.children.length) {
+              stack.push(...node.children)
+            }
           }
+
+          return matchedRootCategory
+        }
+
+        const resolveCategoryNodeByNames = (targetNames = []) => {
+          const matchedNode = findCategoryNodeByNames(categoryTreeData, targetNames)
+          if (matchedNode) return matchedNode
+
+          for (const targetName of targetNames) {
+            const fallbackCategoryId = categoryIdMap[normalizeCategoryName(targetName)]
+            if (fallbackCategoryId) return { _id: fallbackCategoryId }
+          }
+
           return null
         }
 
-        const networkingSubCategoryId = findSubCategoryIdByName(categoryTreeData, "Networking")
+        const isSubCategoryNode = (node) => Boolean(node?.level || node?.category || node?.parentSubCategory)
+
+        const networkingNode = resolveCategoryNodeByNames(["Networking"])
 
         setCategories(leanValidCategories)
         setBanners(promotionalBanners)
@@ -349,17 +380,68 @@ const Home = () => {
         const fetchByBrand = (brandId, limit) => (brandId ? fetchProducts({ brand: brandId, limit }) : Promise.resolve([]))
         const fetchByParentCategory = (categoryId, limit) =>
           categoryId ? fetchProducts({ parentCategory: categoryId, limit }) : Promise.resolve([])
-        const fetchNetworking = (limit) =>
-          networkingSubCategoryId
-            ? fetchProducts({ subcategory: networkingSubCategoryId, limit })
-            : categoryIdMap.networking
-            ? fetchByParentCategory(categoryIdMap.networking, limit)
-            : Promise.resolve([])
+        const fetchByResolvedCategoryNode = (node, limit) => {
+          if (!node?._id) return Promise.resolve([])
+          return isSubCategoryNode(node)
+            ? fetchProducts({ subcategory: node._id, limit })
+            : fetchByParentCategory(node._id, limit)
+        }
+        const fetchNetworking = (limit) => fetchByResolvedCategoryNode(networkingNode, limit)
+
+        const accessoriesRowLimit = 6
+        const categoryRowsLimit = 6
+        const dedupeProductsById = (products = []) => {
+          const seen = new Set()
+          return products.filter((product) => {
+            const id = String(product?._id || "")
+            if (!id || seen.has(id)) return false
+            seen.add(id)
+            return true
+          })
+        }
+        const getProductCategoryNames = (product) => {
+          const names = [
+            product?.category?.name,
+            product?.subCategory?.name,
+            product?.subCategory2?.name,
+            product?.subCategory3?.name,
+            product?.subCategory4?.name,
+            product?.parentCategory?.name,
+          ]
+          return names.map(normalizeCategoryName).filter(Boolean)
+        }
+        const filterProductsByCategoryNames = (products = [], targetNames = []) => {
+          const normalizedTargets = targetNames.map(normalizeCategoryName).filter(Boolean)
+          if (!normalizedTargets.length) return []
+          return products.filter((product) => {
+            const productCategoryNames = getProductCategoryNames(product)
+            return productCategoryNames.some((name) => normalizedTargets.includes(name))
+          })
+        }
+        const buildAccessoriesRowsByName = (productsPool = []) => {
+          const consumables = filterProductsByCategoryNames(productsPool, ["CONSUMABLES", "Consumables"]).slice(
+            0,
+            accessoriesRowLimit,
+          )
+          const idCardPrinters = filterProductsByCategoryNames(productsPool, [
+            "ID CARD PRINTERS",
+            "ID Card Printers",
+          ]).slice(0, accessoriesRowLimit)
+          const timeAttendance = filterProductsByCategoryNames(productsPool, [
+            "Time Attendance & Access control",
+            "Time Attendance & Access Control",
+            "Time Attendance and Access Control",
+          ]).slice(0, accessoriesRowLimit)
+
+          return {
+            consumables,
+            idCardPrinters,
+            timeAttendance,
+          }
+        }
 
         const [
           featuredFallback,
-          hpFallback,
-          dellFallback,
           acerFallback,
           asusFallback,
           msiFallback,
@@ -367,25 +449,69 @@ const Home = () => {
           appleFallback,
           samsungFallback,
           accessoriesData,
+          allProductsData,
           networkingData,
         ] = await Promise.all([
           featured.length > 0 ? Promise.resolve(featured) : fetchProducts({ featured: true, limit: 12 }),
-          hpData.length > 0 ? Promise.resolve(hpData) : fetchByBrand(brandIdMap.hp, 3),
-          dellData.length > 0 ? Promise.resolve(dellData) : fetchByBrand(brandIdMap.dell, 3),
           acerData.length > 0 ? Promise.resolve(acerData) : fetchByBrand(brandIdMap.acer, 3),
           asusData.length > 0 ? Promise.resolve(asusData) : fetchByBrand(brandIdMap.asus, 3),
           msiData.length > 0 ? Promise.resolve(msiData) : fetchByBrand(brandIdMap.msi, 3),
           lenovoData.length > 0 ? Promise.resolve(lenovoData) : fetchByBrand(brandIdMap.lenovo, 3),
           appleData.length > 0 ? Promise.resolve(appleData) : fetchByBrand(brandIdMap.apple, 3),
           samsungData.length > 0 ? Promise.resolve(samsungData) : fetchByBrand(brandIdMap.samsung, 3),
-          fetchByParentCategory(categoryIdMap.accessories, 18),
+          fetchByParentCategory(categoryIdMap.accessories, 120),
+          fetchProducts({ limit: 400 }),
           fetchNetworking(8),
         ])
 
+        let accessoriesPool = dedupeProductsById(accessoriesData)
+        let { consumables: accessoriesConsumablesData, idCardPrinters: accessoriesIdCardPrintersData, timeAttendance: accessoriesTimeAttendanceData } =
+          buildAccessoriesRowsByName(accessoriesPool)
+
+        const noAccessoriesRowsFound =
+          accessoriesConsumablesData.length === 0 &&
+          accessoriesIdCardPrintersData.length === 0 &&
+          accessoriesTimeAttendanceData.length === 0
+
+        if (noAccessoriesRowsFound) {
+          const allProductsFallback = await fetchProducts({ limit: 300 })
+          accessoriesPool = dedupeProductsById([...accessoriesPool, ...allProductsFallback])
+
+          ;({
+            consumables: accessoriesConsumablesData,
+            idCardPrinters: accessoriesIdCardPrintersData,
+            timeAttendance: accessoriesTimeAttendanceData,
+          } = buildAccessoriesRowsByName(accessoriesPool))
+        }
+
+        const mergedAccessoriesData = dedupeProductsById([
+          ...accessoriesConsumablesData,
+          ...accessoriesIdCardPrintersData,
+          ...accessoriesTimeAttendanceData,
+        ])
+        const categoryProductsPool = dedupeProductsById(allProductsData)
+        const barcodeScannersData = filterProductsByCategoryNames(categoryProductsPool, [
+          "BARCODE SCANNERS",
+          "Barcode Scanners",
+        ]).slice(0, categoryRowsLimit)
+        const printersData = filterProductsByCategoryNames(categoryProductsPool, [
+          "PRINTERS",
+          "Printers",
+        ]).slice(0, categoryRowsLimit)
+        const posMachinesData = filterProductsByCategoryNames(categoryProductsPool, [
+          "POS MACHINES",
+          "POS Machines",
+          "POS Machine",
+        ]).slice(0, categoryRowsLimit)
+
         setFeaturedProducts(featuredFallback)
-        setHpProducts(hpFallback)
-        setDellProducts(dellFallback)
-        setAccessoriesProducts(accessoriesData)
+        setBarcodeScannersProducts(barcodeScannersData)
+        setPrintersProducts(printersData)
+        setPosMachinesProducts(posMachinesData)
+        setAccessoriesProducts(mergedAccessoriesData)
+        setAccessoriesConsumablesProducts(accessoriesConsumablesData)
+        setAccessoriesIdCardPrintersProducts(accessoriesIdCardPrintersData)
+        setAccessoriesTimeAttendanceProducts(accessoriesTimeAttendanceData)
         setAcerProducts(acerFallback)
         setAsusProducts(asusFallback)
         setNetworkingProducts(networkingData)
@@ -656,6 +782,23 @@ const Home = () => {
     }
   }
 
+  const accessoriesRows = [
+    { key: "consumables", title: "CONSUMABLES", products: accessoriesConsumablesProducts },
+    { key: "id-card-printers", title: "ID CARD PRINTERS", products: accessoriesIdCardPrintersProducts },
+    {
+      key: "time-attendance-access-control",
+      title: "Time Attendance & Access control",
+      products: accessoriesTimeAttendanceProducts,
+    },
+  ]
+  const hasAccessoriesProducts = accessoriesProducts.length > 0
+  const categoryRows = [
+    { key: "barcode-scanners", products: barcodeScannersProducts },
+    { key: "printers", products: printersProducts },
+    { key: "pos-machines", products: posMachinesProducts },
+  ]
+  const hasCategoryRowsProducts = categoryRows.some((row) => row.products.length > 0)
+
   if (error) {
     return (
       <div className="text-center py-12">
@@ -795,6 +938,7 @@ const Home = () => {
                   </form>
                 )}
 
+
                 {notifSuccess && (
                   <div className="flex flex-col items-center justify-center py-8 text-center">
                     <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#d7ddd4] bg-[#f3f6f2]">
@@ -904,69 +1048,43 @@ const Home = () => {
         )
       })()}
 
-      {/* HP and Dell Section - Mobile shows only HP */}
+      {/* Category Rows Section */}
       <section className="py-8 mx-5 md:mx-9">
-        <div className="flex flex-col md:flex-row gap-6">
-          {/* HP Products */}
-          <div className="w-full md:w-1/2">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <h2 className="text-lg md:text-xl font-bold text-gray-900">HP Products</h2>
-              </div>
-              <button
-                onClick={() => handleBrandClick("HP")}
-                className="text-[#505e4d] hover:text-[#465342] font-medium flex items-center text-sm"
-              >
-                View All HP
-                <ChevronRight className="ml-1" size={14} />
-              </button>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {hpProducts.length > 0 ? (
-                <>
-                  {hpProducts.slice(0, 2).map((product) => (
-                    <HomeStyleProductCard key={product._id} product={product} />
-                  ))}
-                  <div className="hidden md:block">
-                    {hpProducts[2] && <HomeStyleProductCard product={hpProducts[2]} />}
-                  </div>
-                </>
-              ) : (
-                <div className="col-span-2 md:col-span-3 text-center py-8 text-gray-500">No HP products available</div>
-              )}
-            </div>
-          </div>
-
-          {/* Dell Products - Hidden on Mobile */}
-          <div className="w-full md:w-1/2 hidden md:block">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <h2 className="text-lg md:text-xl font-bold text-gray-900">Dell Products</h2>
-              </div>
-              <button
-                onClick={() => handleBrandClick("Dell")}
-                className="text-[#505e4d] hover:text-[#465342] font-medium flex items-center text-sm"
-              >
-                View All Dell
-                <ChevronRight className="ml-1" size={14} />
-              </button>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {dellProducts.length > 0 ? (
-                <>
-                  {dellProducts.slice(0, 2).map((product) => (
-                    <HomeStyleProductCard key={product._id} product={product} />
-                  ))}
-                  <div className="hidden md:block">
-                    {dellProducts[2] && <HomeStyleProductCard product={dellProducts[2]} />}
-                  </div>
-                </>
-              ) : (
-                <div className="col-span-2 md:col-span-3 text-center py-8 text-gray-500">No Dell products available</div>
-              )}
-            </div>
-          </div>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+            <TranslatedText>Most Viewed Products</TranslatedText>
+          </h2>
+          <Link
+            to={getLocalizedPath("/shop")}
+            className="text-[#505e4d] hover:text-[#465342] font-medium flex items-center"
+          >
+            <TranslatedText>View All</TranslatedText>
+            <ChevronRight className="ml-1" size={16} />
+          </Link>
         </div>
+
+        {hasCategoryRowsProducts ? (
+          <div className="space-y-4">
+            {categoryRows.filter((row) => row.products.length > 0).map((row) => (
+              <div key={row.key}>
+                <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
+                  {row.products.slice(0, 2).map((product) => (
+                    <HomeStyleProductCard key={product._id} product={product} />
+                  ))}
+                  {row.products.slice(2, 6).map((product) => (
+                    <div key={product._id} className="hidden md:block">
+                      <HomeStyleProductCard product={product} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-gray-500">
+            <p><TranslatedText>No products available</TranslatedText></p>
+          </div>
+        )}
       </section>
 
       {/* Dynamic Section Position 3 */}
@@ -1006,14 +1124,20 @@ const Home = () => {
           </button>
         </div>
 
-        {accessoriesProducts.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
-            {accessoriesProducts.slice(0, 2).map((product) => (
-              <HomeStyleProductCard key={product._id} product={product} />
-            ))}
-            {accessoriesProducts.slice(2, 18).map((product) => (
-              <div key={product._id} className="hidden md:block">
-                <HomeStyleProductCard product={product} />
+        {hasAccessoriesProducts ? (
+          <div className="space-y-4">
+            {accessoriesRows.filter((row) => row.products.length > 0).map((row) => (
+              <div key={row.key}>
+                <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
+                  {row.products.slice(0, 2).map((product) => (
+                    <HomeStyleProductCard key={product._id} product={product} />
+                  ))}
+                  {row.products.slice(2, 6).map((product) => (
+                    <div key={product._id} className="hidden md:block">
+                      <HomeStyleProductCard product={product} />
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
