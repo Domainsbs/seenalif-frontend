@@ -25,15 +25,15 @@
         },
         {
             "source": "/ae-en/sitemap.xml",
-            "destination": "https://api.grabatoz.ae/sitemap.xml"
+            "destination": "https://api.seenalif.com/sitemap.xml"
         },
         {
             "source": "/ae-ar/sitemap.xml",
-            "destination": "https://api.grabatoz.ae/sitemap.xml"
+            "destination": "https://api.seenalif.com/sitemap.xml"
         },
         {
             "source": "/sitemap.xml",
-            "destination": "https://api.grabatoz.ae/sitemap.xml"
+            "destination": "https://api.seenalif.com/sitemap.xml"
         },
         {
             "source": "/(.*)",

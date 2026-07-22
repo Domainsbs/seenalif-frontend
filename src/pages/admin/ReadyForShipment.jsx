@@ -63,7 +63,7 @@ const InvoiceComponent = forwardRef(({ order }, ref) => {
           </div>
           <div className="flex-shrink-0">
             <img src="/admin-logo.svg" alt="Brand Logo" className="w-40 h-20 object-contain" onError={(e) => { e.target.style.display = "none" }} />
-            A Brand By Crown Excel
+            A Brand By Super Boss
           </div>
         </div>
         <div className="flex justify-between items-start gap-6 ml-2">

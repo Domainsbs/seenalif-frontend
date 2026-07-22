@@ -111,14 +111,12 @@ function App() {
                   
                   {/* Super Admin Portal - MUST be before language routes to prevent matching */}
                   {/* Redirect all language-prefixed super admin URLs to non-prefixed versions */}
-                  <Route path="/ae-en/grabiansuperadmin/*" element={<Navigate to="/grabiansuperadmin/login" replace />} />
-                  <Route path="/ae-ar/grabiansuperadmin/*" element={<Navigate to="/grabiansuperadmin/login" replace />} />
                   <Route path="/ae-en/superadmin/*" element={<Navigate to="/superadmin/dashboard" replace />} />
                   <Route path="/ae-ar/superadmin/*" element={<Navigate to="/superadmin/dashboard" replace />} />
                   
                   {/* Super Admin Portal Routes (separate green-themed portal) */}
                   <Route
-                    path="/grabiansuperadmin/login"
+                    path="/superadmin/login"
                     element={
                       <Suspense fallback={lazyFallback}>
                         <SuperAdminLogin />
@@ -135,7 +133,6 @@ function App() {
                   />
 
                   {/* Admin Routes */}
-                  <Route path="/grabiansadmin/login" element={<Navigate to="/seenalif-admin/login" replace />} />
                   <Route
                     path="/seenalif-admin/login"
                     element={

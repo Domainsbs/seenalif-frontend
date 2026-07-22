@@ -421,7 +421,7 @@ const Footer = ({ className = "" }) => {
 
           {/* Copyright */}
           <div className="text-center text-sm text-white">
-            <p>2025 Seen Alif powered by Crown Excel.</p>
+            <p>2025 Seen Alif Powered By Super Boss Computers Trading LLC.</p>
             <p className="mt-1">Develop By <a href="https://techsolutionor.com" target="_blank" rel="noopener noreferrer">Tech Solutionor</a></p>
           </div>
         </div>

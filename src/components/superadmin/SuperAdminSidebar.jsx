@@ -63,7 +63,7 @@ const SuperAdminSidebar = () => {
   const handleLogout = async () => {
     try {
       await adminLogout()
-      navigate("/grabiansuperadmin/login")
+      navigate("/superadmin/login")
     } catch (error) {
       console.error("Logout failed:", error)
     }

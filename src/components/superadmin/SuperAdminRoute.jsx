@@ -21,7 +21,7 @@ const SuperAdminRoute = ({ children }) => {
 
   // Redirect to super admin login if not authenticated
   if (!isAdminAuthenticated) {
-    return <Navigate to="/grabiansuperadmin/login" state={{ from: location }} replace />
+    return <Navigate to="/superadmin/login" state={{ from: location }} replace />
   }
 
   // Redirect to regular admin if not super admin

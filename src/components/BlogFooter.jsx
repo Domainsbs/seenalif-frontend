@@ -251,7 +251,7 @@ const Footer = () => {
         <div className="border-t border-white mt-12 py-5">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="order-2 md:order-1 text-sm text-white text-center md:text-left">
-              © {new Date().getFullYear()} Seen Alif Powered By Crown Excel
+              © {new Date().getFullYear()} Seen Alif Powered By Super Boss Computers Trading LLC
             </p>
             <nav aria-label="Footer links" className="order-1 md:order-2 text-sm">
               <ul className="flex items-center gap-5 text-white">

@@ -7,7 +7,7 @@ import { getFullImageUrl } from "../utils/imageUtils"
 import { useLanguage } from "../context/LanguageContext"
 
 const FALLBACK_BANNER_IMAGE =
-  "https://api.grabatoz.ae/uploads//banners/banner-projector_final-1767447672755-684802807.webp"
+  "/placeholder.svg"
 
 const debugHeroBanners = (...args) => {
   if (import.meta?.env?.VITE_DEBUG_BANNERS === "true") {

@@ -78,7 +78,7 @@ const InvoiceComponent = forwardRef(({ order }, ref) => {
                 e.target.nextSibling && (e.target.nextSibling.style.display = "flex")
               }}
             />
-            A Brand By Crown Excel
+            A Brand By Super Boss
           </div>
         </div>
 

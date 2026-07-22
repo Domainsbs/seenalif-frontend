@@ -64,7 +64,7 @@ const STORES = [
     phone: "+97143395794",
     img: "/placeholder.svg?height=200&width=300",
     mapEmbedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.8901234567890!2d55.2880084!3d25.2589614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43591325fc3b%3A0x62b01661f2a6cdb7!2sGrabAtoZ!5e0!3m2!1sen!2sae!4v1640995200003!5m2!1sen!2sae",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3608.8901234567890!2d55.2880084!3d25.2589614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43591325fc3b%3A0x62b01661f2a6cdb7!2sSeen%20Alif!5e0!3m2!1sen!2sae!4v1640995200003!5m2!1sen!2sae",
     coordinates: { lat: 25.2589566, lng: 55.2905833 },
     visible: false,
   },

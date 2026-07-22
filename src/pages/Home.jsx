@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import { useState, useEffect, useRef, useMemo } from "react"
 import axios from "axios"
@@ -41,7 +41,7 @@ import config from "../config/config"
 const API_BASE_URL = `${config.API_URL}`
 const FALLBACK_HERO_BANNER = {
   title: "top again 1",
-  image: "https://api.grabatoz.ae/uploads//banners/banner-projector_final-1767447672755-684802807.webp",
+  image: "/placeholder.svg",
   buttonLink: "/product-category/electronics-home/projectors",
   link: "/product-category/electronics-home/projectors",
   deviceType: "desktop",

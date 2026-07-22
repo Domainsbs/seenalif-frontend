@@ -23,6 +23,7 @@ import {
   Shield,
   Mail,
 } from "lucide-react"
+import config from "../../config/config"
 
 const ReviewManagement = () => {
   const { showToast } = useToast()
@@ -80,8 +81,7 @@ const ReviewManagement = () => {
 
   // Get the correct API base URL
   const getApiBaseUrl = () => {
-    const isDevelopment = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-    return isDevelopment ? "http://localhost:5001" : "https://api.grabatoz.ae"
+    return config.API_URL
   }
 
   const fetchReviews = async () => {

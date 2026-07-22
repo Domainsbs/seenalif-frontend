@@ -351,13 +351,13 @@ const BlogPost = () => {
                   <Share2 size={18} className="text-lime-600" />
                   <span className="sr-only">Follow us</span>
                   {[
-                    { name: 'Facebook', href: 'https://www.facebook.com/grabatozae/', Icon: FaFacebookF, color: '#1877F2' },
-                    { name: 'X', href: 'https://x.com/GrabAtoz', Icon: FaXTwitter, color: '#000000' },
-                    { name: 'Instagram', href: 'https://www.instagram.com/grabatoz/', Icon: FaInstagram, color: '#E4405F' },
-                    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/grabatozae', Icon: FaLinkedinIn, color: '#0A66C2' },
-                    { name: 'Pinterest', href: 'https://www.pinterest.com/grabatoz/', Icon: FaPinterestP, color: '#E60023' },
-                    { name: 'TikTok', href: 'https://www.tiktok.com/@grabatoz', Icon: FaTiktok, color: '#000000' },
-                    { name: 'YouTube', href: 'https://www.youtube.com/@grabAtoZ', Icon: FaYoutube, color: '#FF0000' },
+                    { name: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61588606711840', Icon: FaFacebookF, color: '#1877F2' },
+                    { name: 'X', href: '#', Icon: FaXTwitter, color: '#000000' },
+                    { name: 'Instagram', href: 'https://www.instagram.com/seenalifcom/', Icon: FaInstagram, color: '#E4405F' },
+                    { name: 'LinkedIn', href: '#', Icon: FaLinkedinIn, color: '#0A66C2' },
+                    { name: 'Pinterest', href: '#', Icon: FaPinterestP, color: '#E60023' },
+                    { name: 'TikTok', href: '#', Icon: FaTiktok, color: '#000000' },
+                    { name: 'YouTube', href: 'https://www.youtube.com/@SeenAlif', Icon: FaYoutube, color: '#FF0000' },
                   ].map(({ name, href, Icon, color }) => (
                     <a
                       key={name}

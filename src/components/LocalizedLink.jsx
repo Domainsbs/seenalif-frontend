@@ -19,7 +19,7 @@ const LocalizedLink = ({ to, children, ...props }) => {
   // Don't localize admin routes
   if (
     typeof to === 'string' &&
-    (to.startsWith('/admin') || to.startsWith('/seenalif-admin') || to.startsWith('/grabiansadmin'))
+    (to.startsWith('/admin') || to.startsWith('/seenalif-admin'))
   ) {
     return <Link to={to} {...props}>{children}</Link>
   }
