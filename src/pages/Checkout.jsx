@@ -1487,34 +1487,15 @@ const Checkout = () => {
                           {/* Map Display */}
                           <div className="lg:sticky lg:top-4">
                             {selectedStore ? (
-                              <div className="border rounded-lg overflow-hidden">
-                                <div className="bg-gray-50 p-3 border-b">
-                                  <h5 className="font-semibold text-gray-900">{selectedStore.name}</h5>
-                                  <p className="text-sm text-gray-600 mt-1">{selectedStore.address}</p>
-                                  {selectedStore.landmark && <p className="text-xs text-gray-500 mt-1">{selectedStore.landmark}</p>}
-                                  <p className="text-sm text-[#505e4d] mt-1 font-medium">TEL: {selectedStore.phone}</p>
-                                  {selectedStore.timings && <p className="text-xs text-gray-500 mt-1">Timings: {selectedStore.timings}</p>}
-                                  {selectedStore.locationUrl && (
-                                    <a
-                                      href={selectedStore.locationUrl}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-xs text-blue-600 hover:underline mt-1.5 inline-block font-medium"
-                                    >
-                                      📍 Open Location in Google Maps
-                                    </a>
-                                  )}
-                                </div>
-                                <div className="h-64">
-                                  <iframe
-                                    className="w-full h-full border-0"
-                                    src={selectedStore.mapEmbedUrl}
-                                    loading="lazy"
-                                    allowFullScreen
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                    title={`Map of ${selectedStore.name}`}
-                                  ></iframe>
-                                </div>
+                              <div className="border rounded-lg overflow-hidden h-80 shadow-sm">
+                                <iframe
+                                  className="w-full h-full border-0"
+                                  src={selectedStore.mapEmbedUrl}
+                                  loading="lazy"
+                                  allowFullScreen
+                                  referrerPolicy="no-referrer-when-downgrade"
+                                  title={`Map of ${selectedStore.name}`}
+                                ></iframe>
                               </div>
                             ) : (
                               <div className="border rounded-lg h-80 flex items-center justify-center bg-gray-50">
